@@ -3,9 +3,21 @@ type Post {
   createdAt: DateTime! @createdAt
   description: String!
   privacy: Boolean!
-  location: String!
+  xDistance: Float!
+  yDistance: Float!
+  zDistance: Float!
   postedBy: User!
   comments: [Comment!]!
+  marker: Marker!
+}
+
+type Marker {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  imageUrl: String!
+  longitude: Float!
+  latitude: Float!
+  height: Float!
 }
 
 type User {
