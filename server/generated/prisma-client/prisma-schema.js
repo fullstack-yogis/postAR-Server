@@ -7,6 +7,10 @@ module.exports = {
   count: Int!
 }
 
+type AggregateMarker {
+  count: Int!
+}
+
 type AggregatePost {
   count: Int!
 }
@@ -269,6 +273,388 @@ scalar DateTime
 
 scalar Long
 
+type Marker {
+  id: ID!
+  createdAt: DateTime!
+  description: String!
+  imageUrl: String!
+  longitude: Float!
+  latitude: Float!
+  height: Float!
+  markerPostedBy: User!
+  plane: String!
+}
+
+type MarkerConnection {
+  pageInfo: PageInfo!
+  edges: [MarkerEdge]!
+  aggregate: AggregateMarker!
+}
+
+input MarkerCreateInput {
+  id: ID
+  description: String!
+  imageUrl: String!
+  longitude: Float!
+  latitude: Float!
+  height: Float!
+  markerPostedBy: UserCreateOneWithoutMarkersInput!
+  plane: String!
+}
+
+input MarkerCreateManyWithoutMarkerPostedByInput {
+  create: [MarkerCreateWithoutMarkerPostedByInput!]
+  connect: [MarkerWhereUniqueInput!]
+}
+
+input MarkerCreateOneInput {
+  create: MarkerCreateInput
+  connect: MarkerWhereUniqueInput
+}
+
+input MarkerCreateWithoutMarkerPostedByInput {
+  id: ID
+  description: String!
+  imageUrl: String!
+  longitude: Float!
+  latitude: Float!
+  height: Float!
+  plane: String!
+}
+
+type MarkerEdge {
+  node: Marker!
+  cursor: String!
+}
+
+enum MarkerOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  description_ASC
+  description_DESC
+  imageUrl_ASC
+  imageUrl_DESC
+  longitude_ASC
+  longitude_DESC
+  latitude_ASC
+  latitude_DESC
+  height_ASC
+  height_DESC
+  plane_ASC
+  plane_DESC
+}
+
+type MarkerPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  description: String!
+  imageUrl: String!
+  longitude: Float!
+  latitude: Float!
+  height: Float!
+  plane: String!
+}
+
+input MarkerScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  imageUrl: String
+  imageUrl_not: String
+  imageUrl_in: [String!]
+  imageUrl_not_in: [String!]
+  imageUrl_lt: String
+  imageUrl_lte: String
+  imageUrl_gt: String
+  imageUrl_gte: String
+  imageUrl_contains: String
+  imageUrl_not_contains: String
+  imageUrl_starts_with: String
+  imageUrl_not_starts_with: String
+  imageUrl_ends_with: String
+  imageUrl_not_ends_with: String
+  longitude: Float
+  longitude_not: Float
+  longitude_in: [Float!]
+  longitude_not_in: [Float!]
+  longitude_lt: Float
+  longitude_lte: Float
+  longitude_gt: Float
+  longitude_gte: Float
+  latitude: Float
+  latitude_not: Float
+  latitude_in: [Float!]
+  latitude_not_in: [Float!]
+  latitude_lt: Float
+  latitude_lte: Float
+  latitude_gt: Float
+  latitude_gte: Float
+  height: Float
+  height_not: Float
+  height_in: [Float!]
+  height_not_in: [Float!]
+  height_lt: Float
+  height_lte: Float
+  height_gt: Float
+  height_gte: Float
+  plane: String
+  plane_not: String
+  plane_in: [String!]
+  plane_not_in: [String!]
+  plane_lt: String
+  plane_lte: String
+  plane_gt: String
+  plane_gte: String
+  plane_contains: String
+  plane_not_contains: String
+  plane_starts_with: String
+  plane_not_starts_with: String
+  plane_ends_with: String
+  plane_not_ends_with: String
+  AND: [MarkerScalarWhereInput!]
+  OR: [MarkerScalarWhereInput!]
+  NOT: [MarkerScalarWhereInput!]
+}
+
+type MarkerSubscriptionPayload {
+  mutation: MutationType!
+  node: Marker
+  updatedFields: [String!]
+  previousValues: MarkerPreviousValues
+}
+
+input MarkerSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MarkerWhereInput
+  AND: [MarkerSubscriptionWhereInput!]
+  OR: [MarkerSubscriptionWhereInput!]
+  NOT: [MarkerSubscriptionWhereInput!]
+}
+
+input MarkerUpdateDataInput {
+  description: String
+  imageUrl: String
+  longitude: Float
+  latitude: Float
+  height: Float
+  markerPostedBy: UserUpdateOneRequiredWithoutMarkersInput
+  plane: String
+}
+
+input MarkerUpdateInput {
+  description: String
+  imageUrl: String
+  longitude: Float
+  latitude: Float
+  height: Float
+  markerPostedBy: UserUpdateOneRequiredWithoutMarkersInput
+  plane: String
+}
+
+input MarkerUpdateManyDataInput {
+  description: String
+  imageUrl: String
+  longitude: Float
+  latitude: Float
+  height: Float
+  plane: String
+}
+
+input MarkerUpdateManyMutationInput {
+  description: String
+  imageUrl: String
+  longitude: Float
+  latitude: Float
+  height: Float
+  plane: String
+}
+
+input MarkerUpdateManyWithoutMarkerPostedByInput {
+  create: [MarkerCreateWithoutMarkerPostedByInput!]
+  delete: [MarkerWhereUniqueInput!]
+  connect: [MarkerWhereUniqueInput!]
+  set: [MarkerWhereUniqueInput!]
+  disconnect: [MarkerWhereUniqueInput!]
+  update: [MarkerUpdateWithWhereUniqueWithoutMarkerPostedByInput!]
+  upsert: [MarkerUpsertWithWhereUniqueWithoutMarkerPostedByInput!]
+  deleteMany: [MarkerScalarWhereInput!]
+  updateMany: [MarkerUpdateManyWithWhereNestedInput!]
+}
+
+input MarkerUpdateManyWithWhereNestedInput {
+  where: MarkerScalarWhereInput!
+  data: MarkerUpdateManyDataInput!
+}
+
+input MarkerUpdateOneRequiredInput {
+  create: MarkerCreateInput
+  update: MarkerUpdateDataInput
+  upsert: MarkerUpsertNestedInput
+  connect: MarkerWhereUniqueInput
+}
+
+input MarkerUpdateWithoutMarkerPostedByDataInput {
+  description: String
+  imageUrl: String
+  longitude: Float
+  latitude: Float
+  height: Float
+  plane: String
+}
+
+input MarkerUpdateWithWhereUniqueWithoutMarkerPostedByInput {
+  where: MarkerWhereUniqueInput!
+  data: MarkerUpdateWithoutMarkerPostedByDataInput!
+}
+
+input MarkerUpsertNestedInput {
+  update: MarkerUpdateDataInput!
+  create: MarkerCreateInput!
+}
+
+input MarkerUpsertWithWhereUniqueWithoutMarkerPostedByInput {
+  where: MarkerWhereUniqueInput!
+  update: MarkerUpdateWithoutMarkerPostedByDataInput!
+  create: MarkerCreateWithoutMarkerPostedByInput!
+}
+
+input MarkerWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  imageUrl: String
+  imageUrl_not: String
+  imageUrl_in: [String!]
+  imageUrl_not_in: [String!]
+  imageUrl_lt: String
+  imageUrl_lte: String
+  imageUrl_gt: String
+  imageUrl_gte: String
+  imageUrl_contains: String
+  imageUrl_not_contains: String
+  imageUrl_starts_with: String
+  imageUrl_not_starts_with: String
+  imageUrl_ends_with: String
+  imageUrl_not_ends_with: String
+  longitude: Float
+  longitude_not: Float
+  longitude_in: [Float!]
+  longitude_not_in: [Float!]
+  longitude_lt: Float
+  longitude_lte: Float
+  longitude_gt: Float
+  longitude_gte: Float
+  latitude: Float
+  latitude_not: Float
+  latitude_in: [Float!]
+  latitude_not_in: [Float!]
+  latitude_lt: Float
+  latitude_lte: Float
+  latitude_gt: Float
+  latitude_gte: Float
+  height: Float
+  height_not: Float
+  height_in: [Float!]
+  height_not_in: [Float!]
+  height_lt: Float
+  height_lte: Float
+  height_gt: Float
+  height_gte: Float
+  markerPostedBy: UserWhereInput
+  plane: String
+  plane_not: String
+  plane_in: [String!]
+  plane_not_in: [String!]
+  plane_lt: String
+  plane_lte: String
+  plane_gt: String
+  plane_gte: String
+  plane_contains: String
+  plane_not_contains: String
+  plane_starts_with: String
+  plane_not_starts_with: String
+  plane_ends_with: String
+  plane_not_ends_with: String
+  AND: [MarkerWhereInput!]
+  OR: [MarkerWhereInput!]
+  NOT: [MarkerWhereInput!]
+}
+
+input MarkerWhereUniqueInput {
+  id: ID
+}
+
 type Mutation {
   createComment(data: CommentCreateInput!): Comment!
   updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
@@ -276,6 +662,12 @@ type Mutation {
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteManyComments(where: CommentWhereInput): BatchPayload!
+  createMarker(data: MarkerCreateInput!): Marker!
+  updateMarker(data: MarkerUpdateInput!, where: MarkerWhereUniqueInput!): Marker
+  updateManyMarkers(data: MarkerUpdateManyMutationInput!, where: MarkerWhereInput): BatchPayload!
+  upsertMarker(where: MarkerWhereUniqueInput!, create: MarkerCreateInput!, update: MarkerUpdateInput!): Marker!
+  deleteMarker(where: MarkerWhereUniqueInput!): Marker
+  deleteManyMarkers(where: MarkerWhereInput): BatchPayload!
   createPost(data: PostCreateInput!): Post!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
@@ -312,9 +704,14 @@ type Post {
   createdAt: DateTime!
   description: String!
   privacy: Boolean!
-  location: String!
-  postedBy: User!
+  xDistance: Float!
+  yDistance: Float!
+  zDistance: Float!
+  height: Float!
+  width: Float!
+  postPostedBy: User!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  marker: Marker!
 }
 
 type PostConnection {
@@ -327,13 +724,18 @@ input PostCreateInput {
   id: ID
   description: String!
   privacy: Boolean!
-  location: String!
-  postedBy: UserCreateOneWithoutPostsInput!
+  xDistance: Float!
+  yDistance: Float!
+  zDistance: Float!
+  height: Float!
+  width: Float!
+  postPostedBy: UserCreateOneWithoutPostsInput!
   comments: CommentCreateManyWithoutPostInput
+  marker: MarkerCreateOneInput!
 }
 
-input PostCreateManyWithoutPostedByInput {
-  create: [PostCreateWithoutPostedByInput!]
+input PostCreateManyWithoutPostPostedByInput {
+  create: [PostCreateWithoutPostPostedByInput!]
   connect: [PostWhereUniqueInput!]
 }
 
@@ -346,16 +748,26 @@ input PostCreateWithoutCommentsInput {
   id: ID
   description: String!
   privacy: Boolean!
-  location: String!
-  postedBy: UserCreateOneWithoutPostsInput!
+  xDistance: Float!
+  yDistance: Float!
+  zDistance: Float!
+  height: Float!
+  width: Float!
+  postPostedBy: UserCreateOneWithoutPostsInput!
+  marker: MarkerCreateOneInput!
 }
 
-input PostCreateWithoutPostedByInput {
+input PostCreateWithoutPostPostedByInput {
   id: ID
   description: String!
   privacy: Boolean!
-  location: String!
+  xDistance: Float!
+  yDistance: Float!
+  zDistance: Float!
+  height: Float!
+  width: Float!
   comments: CommentCreateManyWithoutPostInput
+  marker: MarkerCreateOneInput!
 }
 
 type PostEdge {
@@ -372,8 +784,16 @@ enum PostOrderByInput {
   description_DESC
   privacy_ASC
   privacy_DESC
-  location_ASC
-  location_DESC
+  xDistance_ASC
+  xDistance_DESC
+  yDistance_ASC
+  yDistance_DESC
+  zDistance_ASC
+  zDistance_DESC
+  height_ASC
+  height_DESC
+  width_ASC
+  width_DESC
 }
 
 type PostPreviousValues {
@@ -381,7 +801,11 @@ type PostPreviousValues {
   createdAt: DateTime!
   description: String!
   privacy: Boolean!
-  location: String!
+  xDistance: Float!
+  yDistance: Float!
+  zDistance: Float!
+  height: Float!
+  width: Float!
 }
 
 input PostScalarWhereInput {
@@ -423,20 +847,46 @@ input PostScalarWhereInput {
   description_not_ends_with: String
   privacy: Boolean
   privacy_not: Boolean
-  location: String
-  location_not: String
-  location_in: [String!]
-  location_not_in: [String!]
-  location_lt: String
-  location_lte: String
-  location_gt: String
-  location_gte: String
-  location_contains: String
-  location_not_contains: String
-  location_starts_with: String
-  location_not_starts_with: String
-  location_ends_with: String
-  location_not_ends_with: String
+  xDistance: Float
+  xDistance_not: Float
+  xDistance_in: [Float!]
+  xDistance_not_in: [Float!]
+  xDistance_lt: Float
+  xDistance_lte: Float
+  xDistance_gt: Float
+  xDistance_gte: Float
+  yDistance: Float
+  yDistance_not: Float
+  yDistance_in: [Float!]
+  yDistance_not_in: [Float!]
+  yDistance_lt: Float
+  yDistance_lte: Float
+  yDistance_gt: Float
+  yDistance_gte: Float
+  zDistance: Float
+  zDistance_not: Float
+  zDistance_in: [Float!]
+  zDistance_not_in: [Float!]
+  zDistance_lt: Float
+  zDistance_lte: Float
+  zDistance_gt: Float
+  zDistance_gte: Float
+  height: Float
+  height_not: Float
+  height_in: [Float!]
+  height_not_in: [Float!]
+  height_lt: Float
+  height_lte: Float
+  height_gt: Float
+  height_gte: Float
+  width: Float
+  width_not: Float
+  width_in: [Float!]
+  width_not_in: [Float!]
+  width_lt: Float
+  width_lte: Float
+  width_gt: Float
+  width_gte: Float
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -463,31 +913,44 @@ input PostSubscriptionWhereInput {
 input PostUpdateInput {
   description: String
   privacy: Boolean
-  location: String
-  postedBy: UserUpdateOneRequiredWithoutPostsInput
+  xDistance: Float
+  yDistance: Float
+  zDistance: Float
+  height: Float
+  width: Float
+  postPostedBy: UserUpdateOneRequiredWithoutPostsInput
   comments: CommentUpdateManyWithoutPostInput
+  marker: MarkerUpdateOneRequiredInput
 }
 
 input PostUpdateManyDataInput {
   description: String
   privacy: Boolean
-  location: String
+  xDistance: Float
+  yDistance: Float
+  zDistance: Float
+  height: Float
+  width: Float
 }
 
 input PostUpdateManyMutationInput {
   description: String
   privacy: Boolean
-  location: String
+  xDistance: Float
+  yDistance: Float
+  zDistance: Float
+  height: Float
+  width: Float
 }
 
-input PostUpdateManyWithoutPostedByInput {
-  create: [PostCreateWithoutPostedByInput!]
+input PostUpdateManyWithoutPostPostedByInput {
+  create: [PostCreateWithoutPostPostedByInput!]
   delete: [PostWhereUniqueInput!]
   connect: [PostWhereUniqueInput!]
   set: [PostWhereUniqueInput!]
   disconnect: [PostWhereUniqueInput!]
-  update: [PostUpdateWithWhereUniqueWithoutPostedByInput!]
-  upsert: [PostUpsertWithWhereUniqueWithoutPostedByInput!]
+  update: [PostUpdateWithWhereUniqueWithoutPostPostedByInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutPostPostedByInput!]
   deleteMany: [PostScalarWhereInput!]
   updateMany: [PostUpdateManyWithWhereNestedInput!]
 }
@@ -507,20 +970,30 @@ input PostUpdateOneRequiredWithoutCommentsInput {
 input PostUpdateWithoutCommentsDataInput {
   description: String
   privacy: Boolean
-  location: String
-  postedBy: UserUpdateOneRequiredWithoutPostsInput
+  xDistance: Float
+  yDistance: Float
+  zDistance: Float
+  height: Float
+  width: Float
+  postPostedBy: UserUpdateOneRequiredWithoutPostsInput
+  marker: MarkerUpdateOneRequiredInput
 }
 
-input PostUpdateWithoutPostedByDataInput {
+input PostUpdateWithoutPostPostedByDataInput {
   description: String
   privacy: Boolean
-  location: String
+  xDistance: Float
+  yDistance: Float
+  zDistance: Float
+  height: Float
+  width: Float
   comments: CommentUpdateManyWithoutPostInput
+  marker: MarkerUpdateOneRequiredInput
 }
 
-input PostUpdateWithWhereUniqueWithoutPostedByInput {
+input PostUpdateWithWhereUniqueWithoutPostPostedByInput {
   where: PostWhereUniqueInput!
-  data: PostUpdateWithoutPostedByDataInput!
+  data: PostUpdateWithoutPostPostedByDataInput!
 }
 
 input PostUpsertWithoutCommentsInput {
@@ -528,10 +1001,10 @@ input PostUpsertWithoutCommentsInput {
   create: PostCreateWithoutCommentsInput!
 }
 
-input PostUpsertWithWhereUniqueWithoutPostedByInput {
+input PostUpsertWithWhereUniqueWithoutPostPostedByInput {
   where: PostWhereUniqueInput!
-  update: PostUpdateWithoutPostedByDataInput!
-  create: PostCreateWithoutPostedByInput!
+  update: PostUpdateWithoutPostPostedByDataInput!
+  create: PostCreateWithoutPostPostedByInput!
 }
 
 input PostWhereInput {
@@ -573,24 +1046,51 @@ input PostWhereInput {
   description_not_ends_with: String
   privacy: Boolean
   privacy_not: Boolean
-  location: String
-  location_not: String
-  location_in: [String!]
-  location_not_in: [String!]
-  location_lt: String
-  location_lte: String
-  location_gt: String
-  location_gte: String
-  location_contains: String
-  location_not_contains: String
-  location_starts_with: String
-  location_not_starts_with: String
-  location_ends_with: String
-  location_not_ends_with: String
-  postedBy: UserWhereInput
+  xDistance: Float
+  xDistance_not: Float
+  xDistance_in: [Float!]
+  xDistance_not_in: [Float!]
+  xDistance_lt: Float
+  xDistance_lte: Float
+  xDistance_gt: Float
+  xDistance_gte: Float
+  yDistance: Float
+  yDistance_not: Float
+  yDistance_in: [Float!]
+  yDistance_not_in: [Float!]
+  yDistance_lt: Float
+  yDistance_lte: Float
+  yDistance_gt: Float
+  yDistance_gte: Float
+  zDistance: Float
+  zDistance_not: Float
+  zDistance_in: [Float!]
+  zDistance_not_in: [Float!]
+  zDistance_lt: Float
+  zDistance_lte: Float
+  zDistance_gt: Float
+  zDistance_gte: Float
+  height: Float
+  height_not: Float
+  height_in: [Float!]
+  height_not_in: [Float!]
+  height_lt: Float
+  height_lte: Float
+  height_gt: Float
+  height_gte: Float
+  width: Float
+  width_not: Float
+  width_in: [Float!]
+  width_not_in: [Float!]
+  width_lt: Float
+  width_lte: Float
+  width_gt: Float
+  width_gte: Float
+  postPostedBy: UserWhereInput
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
+  marker: MarkerWhereInput
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]
@@ -604,6 +1104,9 @@ type Query {
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  marker(where: MarkerWhereUniqueInput!): Marker
+  markers(where: MarkerWhereInput, orderBy: MarkerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Marker]!
+  markersConnection(where: MarkerWhereInput, orderBy: MarkerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MarkerConnection!
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
@@ -615,6 +1118,7 @@ type Query {
 
 type Subscription {
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  marker(where: MarkerSubscriptionWhereInput): MarkerSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -626,6 +1130,7 @@ type User {
   password: String!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  markers(where: MarkerWhereInput, orderBy: MarkerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Marker!]
 }
 
 type UserConnection {
@@ -639,12 +1144,18 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
-  posts: PostCreateManyWithoutPostedByInput
+  posts: PostCreateManyWithoutPostPostedByInput
   comments: CommentCreateManyWithoutUserInput
+  markers: MarkerCreateManyWithoutMarkerPostedByInput
 }
 
 input UserCreateOneWithoutCommentsInput {
   create: UserCreateWithoutCommentsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutMarkersInput {
+  create: UserCreateWithoutMarkersInput
   connect: UserWhereUniqueInput
 }
 
@@ -658,7 +1169,17 @@ input UserCreateWithoutCommentsInput {
   name: String!
   email: String!
   password: String!
-  posts: PostCreateManyWithoutPostedByInput
+  posts: PostCreateManyWithoutPostPostedByInput
+  markers: MarkerCreateManyWithoutMarkerPostedByInput
+}
+
+input UserCreateWithoutMarkersInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  posts: PostCreateManyWithoutPostPostedByInput
+  comments: CommentCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -667,6 +1188,7 @@ input UserCreateWithoutPostsInput {
   email: String!
   password: String!
   comments: CommentCreateManyWithoutUserInput
+  markers: MarkerCreateManyWithoutMarkerPostedByInput
 }
 
 type UserEdge {
@@ -714,8 +1236,9 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  posts: PostUpdateManyWithoutPostedByInput
+  posts: PostUpdateManyWithoutPostPostedByInput
   comments: CommentUpdateManyWithoutUserInput
+  markers: MarkerUpdateManyWithoutMarkerPostedByInput
 }
 
 input UserUpdateManyMutationInput {
@@ -731,6 +1254,13 @@ input UserUpdateOneRequiredWithoutCommentsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutMarkersInput {
+  create: UserCreateWithoutMarkersInput
+  update: UserUpdateWithoutMarkersDataInput
+  upsert: UserUpsertWithoutMarkersInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredWithoutPostsInput {
   create: UserCreateWithoutPostsInput
   update: UserUpdateWithoutPostsDataInput
@@ -742,7 +1272,16 @@ input UserUpdateWithoutCommentsDataInput {
   name: String
   email: String
   password: String
-  posts: PostUpdateManyWithoutPostedByInput
+  posts: PostUpdateManyWithoutPostPostedByInput
+  markers: MarkerUpdateManyWithoutMarkerPostedByInput
+}
+
+input UserUpdateWithoutMarkersDataInput {
+  name: String
+  email: String
+  password: String
+  posts: PostUpdateManyWithoutPostPostedByInput
+  comments: CommentUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -750,11 +1289,17 @@ input UserUpdateWithoutPostsDataInput {
   email: String
   password: String
   comments: CommentUpdateManyWithoutUserInput
+  markers: MarkerUpdateManyWithoutMarkerPostedByInput
 }
 
 input UserUpsertWithoutCommentsInput {
   update: UserUpdateWithoutCommentsDataInput!
   create: UserCreateWithoutCommentsInput!
+}
+
+input UserUpsertWithoutMarkersInput {
+  update: UserUpdateWithoutMarkersDataInput!
+  create: UserCreateWithoutMarkersInput!
 }
 
 input UserUpsertWithoutPostsInput {
@@ -825,6 +1370,9 @@ input UserWhereInput {
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
+  markers_every: MarkerWhereInput
+  markers_some: MarkerWhereInput
+  markers_none: MarkerWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

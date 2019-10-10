@@ -5,6 +5,7 @@ const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
 const User = require('./resolvers/User');
 const Post = require('./resolvers/Post');
+const Marker = require('./resolvers/Marker');
 const Subscription = require('./resolvers/Subscription');
 const Comment = require('./resolvers/Comment');
 if (process.env.NODE_ENV !== 'production') require('../secrets');

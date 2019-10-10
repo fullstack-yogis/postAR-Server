@@ -17,6 +17,7 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   comment: (where?: CommentWhereInput) => Promise<boolean>;
+  marker: (where?: MarkerWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
@@ -59,6 +60,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => CommentConnectionPromise;
+  marker: (where: MarkerWhereUniqueInput) => MarkerNullablePromise;
+  markers: (args?: {
+    where?: MarkerWhereInput;
+    orderBy?: MarkerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Marker>;
+  markersConnection: (args?: {
+    where?: MarkerWhereInput;
+    orderBy?: MarkerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => MarkerConnectionPromise;
   post: (where: PostWhereUniqueInput) => PostNullablePromise;
   posts: (args?: {
     where?: PostWhereInput;
@@ -119,6 +139,22 @@ export interface Prisma {
   }) => CommentPromise;
   deleteComment: (where: CommentWhereUniqueInput) => CommentPromise;
   deleteManyComments: (where?: CommentWhereInput) => BatchPayloadPromise;
+  createMarker: (data: MarkerCreateInput) => MarkerPromise;
+  updateMarker: (args: {
+    data: MarkerUpdateInput;
+    where: MarkerWhereUniqueInput;
+  }) => MarkerPromise;
+  updateManyMarkers: (args: {
+    data: MarkerUpdateManyMutationInput;
+    where?: MarkerWhereInput;
+  }) => BatchPayloadPromise;
+  upsertMarker: (args: {
+    where: MarkerWhereUniqueInput;
+    create: MarkerCreateInput;
+    update: MarkerUpdateInput;
+  }) => MarkerPromise;
+  deleteMarker: (where: MarkerWhereUniqueInput) => MarkerPromise;
+  deleteManyMarkers: (where?: MarkerWhereInput) => BatchPayloadPromise;
   createPost: (data: PostCreateInput) => PostPromise;
   updatePost: (args: {
     data: PostUpdateInput;
@@ -163,6 +199,9 @@ export interface Subscription {
   comment: (
     where?: CommentSubscriptionWhereInput
   ) => CommentSubscriptionPayloadSubscription;
+  marker: (
+    where?: MarkerSubscriptionWhereInput
+  ) => MarkerSubscriptionPayloadSubscription;
   post: (
     where?: PostSubscriptionWhereInput
   ) => PostSubscriptionPayloadSubscription;
@@ -188,8 +227,16 @@ export type PostOrderByInput =
   | "description_DESC"
   | "privacy_ASC"
   | "privacy_DESC"
-  | "location_ASC"
-  | "location_DESC";
+  | "xDistance_ASC"
+  | "xDistance_DESC"
+  | "yDistance_ASC"
+  | "yDistance_DESC"
+  | "zDistance_ASC"
+  | "zDistance_DESC"
+  | "height_ASC"
+  | "height_DESC"
+  | "width_ASC"
+  | "width_DESC";
 
 export type CommentOrderByInput =
   | "id_ASC"
@@ -198,6 +245,24 @@ export type CommentOrderByInput =
   | "text_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC";
+
+export type MarkerOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "description_ASC"
+  | "description_DESC"
+  | "imageUrl_ASC"
+  | "imageUrl_DESC"
+  | "longitude_ASC"
+  | "longitude_DESC"
+  | "latitude_ASC"
+  | "latitude_DESC"
+  | "height_ASC"
+  | "height_DESC"
+  | "plane_ASC"
+  | "plane_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -211,45 +276,71 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserUpdateOneRequiredWithoutPostsInput {
-  create?: Maybe<UserCreateWithoutPostsInput>;
-  update?: Maybe<UserUpdateWithoutPostsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutPostsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface CommentUpdateManyWithoutUserInput {
+  create?: Maybe<
+    CommentCreateWithoutUserInput[] | CommentCreateWithoutUserInput
+  >;
+  delete?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  set?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  disconnect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  update?: Maybe<
+    | CommentUpdateWithWhereUniqueWithoutUserInput[]
+    | CommentUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | CommentUpsertWithWhereUniqueWithoutUserInput[]
+    | CommentUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+  updateMany?: Maybe<
+    | CommentUpdateManyWithWhereNestedInput[]
+    | CommentUpdateManyWithWhereNestedInput
+  >;
 }
 
 export type CommentWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface UserCreateOneWithoutCommentsInput {
-  create?: Maybe<UserCreateWithoutCommentsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface CommentUpdateWithoutPostDataInput {
-  text?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
-}
-
-export interface UserCreateWithoutCommentsInput {
+export interface UserCreateWithoutMarkersInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
-  posts?: Maybe<PostCreateManyWithoutPostedByInput>;
+  posts?: Maybe<PostCreateManyWithoutPostPostedByInput>;
+  comments?: Maybe<CommentCreateManyWithoutUserInput>;
 }
 
-export interface CommentUpdateWithWhereUniqueWithoutUserInput {
-  where: CommentWhereUniqueInput;
-  data: CommentUpdateWithoutUserDataInput;
+export interface UserUpsertWithoutCommentsInput {
+  update: UserUpdateWithoutCommentsDataInput;
+  create: UserCreateWithoutCommentsInput;
 }
 
-export interface PostCreateManyWithoutPostedByInput {
+export interface PostCreateManyWithoutPostPostedByInput {
   create?: Maybe<
-    PostCreateWithoutPostedByInput[] | PostCreateWithoutPostedByInput
+    PostCreateWithoutPostPostedByInput[] | PostCreateWithoutPostPostedByInput
   >;
   connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutUserInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutUserDataInput;
+  create: CommentCreateWithoutUserInput;
+}
+
+export interface PostCreateWithoutPostPostedByInput {
+  id?: Maybe<ID_Input>;
+  description: String;
+  privacy: Boolean;
+  xDistance: Float;
+  yDistance: Float;
+  zDistance: Float;
+  height: Float;
+  width: Float;
+  comments?: Maybe<CommentCreateManyWithoutPostInput>;
+  marker: MarkerCreateOneInput;
 }
 
 export interface UserWhereInput {
@@ -315,28 +406,12 @@ export interface UserWhereInput {
   comments_every?: Maybe<CommentWhereInput>;
   comments_some?: Maybe<CommentWhereInput>;
   comments_none?: Maybe<CommentWhereInput>;
+  markers_every?: Maybe<MarkerWhereInput>;
+  markers_some?: Maybe<MarkerWhereInput>;
+  markers_none?: Maybe<MarkerWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
-}
-
-export interface PostCreateWithoutPostedByInput {
-  id?: Maybe<ID_Input>;
-  description: String;
-  privacy: Boolean;
-  location: String;
-  comments?: Maybe<CommentCreateManyWithoutPostInput>;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
 export interface CommentCreateManyWithoutPostInput {
@@ -344,6 +419,123 @@ export interface CommentCreateManyWithoutPostInput {
     CommentCreateWithoutPostInput[] | CommentCreateWithoutPostInput
   >;
   connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+}
+
+export interface MarkerWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  imageUrl?: Maybe<String>;
+  imageUrl_not?: Maybe<String>;
+  imageUrl_in?: Maybe<String[] | String>;
+  imageUrl_not_in?: Maybe<String[] | String>;
+  imageUrl_lt?: Maybe<String>;
+  imageUrl_lte?: Maybe<String>;
+  imageUrl_gt?: Maybe<String>;
+  imageUrl_gte?: Maybe<String>;
+  imageUrl_contains?: Maybe<String>;
+  imageUrl_not_contains?: Maybe<String>;
+  imageUrl_starts_with?: Maybe<String>;
+  imageUrl_not_starts_with?: Maybe<String>;
+  imageUrl_ends_with?: Maybe<String>;
+  imageUrl_not_ends_with?: Maybe<String>;
+  longitude?: Maybe<Float>;
+  longitude_not?: Maybe<Float>;
+  longitude_in?: Maybe<Float[] | Float>;
+  longitude_not_in?: Maybe<Float[] | Float>;
+  longitude_lt?: Maybe<Float>;
+  longitude_lte?: Maybe<Float>;
+  longitude_gt?: Maybe<Float>;
+  longitude_gte?: Maybe<Float>;
+  latitude?: Maybe<Float>;
+  latitude_not?: Maybe<Float>;
+  latitude_in?: Maybe<Float[] | Float>;
+  latitude_not_in?: Maybe<Float[] | Float>;
+  latitude_lt?: Maybe<Float>;
+  latitude_lte?: Maybe<Float>;
+  latitude_gt?: Maybe<Float>;
+  latitude_gte?: Maybe<Float>;
+  height?: Maybe<Float>;
+  height_not?: Maybe<Float>;
+  height_in?: Maybe<Float[] | Float>;
+  height_not_in?: Maybe<Float[] | Float>;
+  height_lt?: Maybe<Float>;
+  height_lte?: Maybe<Float>;
+  height_gt?: Maybe<Float>;
+  height_gte?: Maybe<Float>;
+  markerPostedBy?: Maybe<UserWhereInput>;
+  plane?: Maybe<String>;
+  plane_not?: Maybe<String>;
+  plane_in?: Maybe<String[] | String>;
+  plane_not_in?: Maybe<String[] | String>;
+  plane_lt?: Maybe<String>;
+  plane_lte?: Maybe<String>;
+  plane_gt?: Maybe<String>;
+  plane_gte?: Maybe<String>;
+  plane_contains?: Maybe<String>;
+  plane_not_contains?: Maybe<String>;
+  plane_starts_with?: Maybe<String>;
+  plane_not_starts_with?: Maybe<String>;
+  plane_ends_with?: Maybe<String>;
+  plane_not_ends_with?: Maybe<String>;
+  AND?: Maybe<MarkerWhereInput[] | MarkerWhereInput>;
+  OR?: Maybe<MarkerWhereInput[] | MarkerWhereInput>;
+  NOT?: Maybe<MarkerWhereInput[] | MarkerWhereInput>;
+}
+
+export interface CommentCreateWithoutPostInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  user: UserCreateOneWithoutCommentsInput;
+}
+
+export interface PostSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<PostWhereInput>;
+  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+}
+
+export interface UserCreateOneWithoutCommentsInput {
+  create?: Maybe<UserCreateWithoutCommentsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface CommentSubscriptionWhereInput {
@@ -357,18 +549,22 @@ export interface CommentSubscriptionWhereInput {
   NOT?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
 }
 
-export interface CommentCreateWithoutPostInput {
+export interface UserCreateWithoutCommentsInput {
   id?: Maybe<ID_Input>;
-  text: String;
-  user: UserCreateOneWithoutCommentsInput;
+  name: String;
+  email: String;
+  password: String;
+  posts?: Maybe<PostCreateManyWithoutPostPostedByInput>;
+  markers?: Maybe<MarkerCreateManyWithoutMarkerPostedByInput>;
 }
 
 export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  posts?: Maybe<PostUpdateManyWithoutPostedByInput>;
+  posts?: Maybe<PostUpdateManyWithoutPostPostedByInput>;
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
+  markers?: Maybe<MarkerUpdateManyWithoutMarkerPostedByInput>;
 }
 
 export interface CommentUpdateInput {
@@ -380,7 +576,11 @@ export interface CommentUpdateInput {
 export interface PostUpdateManyMutationInput {
   description?: Maybe<String>;
   privacy?: Maybe<Boolean>;
-  location?: Maybe<String>;
+  xDistance?: Maybe<Float>;
+  yDistance?: Maybe<Float>;
+  zDistance?: Maybe<Float>;
+  height?: Maybe<Float>;
+  width?: Maybe<Float>;
 }
 
 export interface PostUpdateOneRequiredWithoutCommentsInput {
@@ -390,85 +590,79 @@ export interface PostUpdateOneRequiredWithoutCommentsInput {
   connect?: Maybe<PostWhereUniqueInput>;
 }
 
-export interface PostUpdateInput {
-  description?: Maybe<String>;
-  privacy?: Maybe<Boolean>;
-  location?: Maybe<String>;
-  postedBy?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
-  comments?: Maybe<CommentUpdateManyWithoutPostInput>;
-}
+export type MarkerWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface PostUpdateWithoutCommentsDataInput {
   description?: Maybe<String>;
   privacy?: Maybe<Boolean>;
-  location?: Maybe<String>;
-  postedBy?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+  xDistance?: Maybe<Float>;
+  yDistance?: Maybe<Float>;
+  zDistance?: Maybe<Float>;
+  height?: Maybe<Float>;
+  width?: Maybe<Float>;
+  postPostedBy?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+  marker?: Maybe<MarkerUpdateOneRequiredInput>;
 }
 
-export interface CommentUpdateManyMutationInput {
-  text?: Maybe<String>;
+export interface MarkerUpdateManyMutationInput {
+  description?: Maybe<String>;
+  imageUrl?: Maybe<String>;
+  longitude?: Maybe<Float>;
+  latitude?: Maybe<Float>;
+  height?: Maybe<Float>;
+  plane?: Maybe<String>;
 }
 
-export interface PostUpsertWithWhereUniqueWithoutPostedByInput {
-  where: PostWhereUniqueInput;
-  update: PostUpdateWithoutPostedByDataInput;
-  create: PostCreateWithoutPostedByInput;
+export interface UserUpdateOneRequiredWithoutPostsInput {
+  create?: Maybe<UserCreateWithoutPostsInput>;
+  update?: Maybe<UserUpdateWithoutPostsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutPostsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpsertWithoutCommentsInput {
-  update: UserUpdateWithoutCommentsDataInput;
-  create: UserCreateWithoutCommentsInput;
-}
+export type PostWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface UserUpdateWithoutPostsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
+  markers?: Maybe<MarkerUpdateManyWithoutMarkerPostedByInput>;
 }
 
-export interface PostUpdateManyWithWhereNestedInput {
-  where: PostScalarWhereInput;
-  data: PostUpdateManyDataInput;
+export interface PostUpsertWithoutCommentsInput {
+  update: PostUpdateWithoutCommentsDataInput;
+  create: PostCreateWithoutCommentsInput;
 }
 
-export interface CommentUpdateManyWithoutUserInput {
-  create?: Maybe<
-    CommentCreateWithoutUserInput[] | CommentCreateWithoutUserInput
-  >;
-  delete?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  set?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  disconnect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  update?: Maybe<
-    | CommentUpdateWithWhereUniqueWithoutUserInput[]
-    | CommentUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | CommentUpsertWithWhereUniqueWithoutUserInput[]
-    | CommentUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-  updateMany?: Maybe<
-    | CommentUpdateManyWithWhereNestedInput[]
-    | CommentUpdateManyWithWhereNestedInput
-  >;
+export interface PostUpsertWithWhereUniqueWithoutPostPostedByInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutPostPostedByDataInput;
+  create: PostCreateWithoutPostPostedByInput;
 }
 
-export interface PostCreateOneWithoutCommentsInput {
-  create?: Maybe<PostCreateWithoutCommentsInput>;
-  connect?: Maybe<PostWhereUniqueInput>;
-}
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
 
-export interface CommentUpsertWithWhereUniqueWithoutPostInput {
+export interface CommentUpdateWithWhereUniqueWithoutUserInput {
   where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutPostDataInput;
-  create: CommentCreateWithoutPostInput;
+  data: CommentUpdateWithoutUserDataInput;
 }
 
-export interface UserCreateOneWithoutPostsInput {
-  create?: Maybe<UserCreateWithoutPostsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface PostUpdateManyDataInput {
+  description?: Maybe<String>;
+  privacy?: Maybe<Boolean>;
+  xDistance?: Maybe<Float>;
+  yDistance?: Maybe<Float>;
+  zDistance?: Maybe<Float>;
+  height?: Maybe<Float>;
+  width?: Maybe<Float>;
 }
 
 export interface CommentUpdateWithoutUserDataInput {
@@ -476,20 +670,7 @@ export interface CommentUpdateWithoutUserDataInput {
   post?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
 }
 
-export interface CommentCreateManyWithoutUserInput {
-  create?: Maybe<
-    CommentCreateWithoutUserInput[] | CommentCreateWithoutUserInput
-  >;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-}
-
-export interface CommentUpsertWithWhereUniqueWithoutUserInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutUserDataInput;
-  create: CommentCreateWithoutUserInput;
-}
-
-export interface PostWhereInput {
+export interface PostScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -528,27 +709,62 @@ export interface PostWhereInput {
   description_not_ends_with?: Maybe<String>;
   privacy?: Maybe<Boolean>;
   privacy_not?: Maybe<Boolean>;
-  location?: Maybe<String>;
-  location_not?: Maybe<String>;
-  location_in?: Maybe<String[] | String>;
-  location_not_in?: Maybe<String[] | String>;
-  location_lt?: Maybe<String>;
-  location_lte?: Maybe<String>;
-  location_gt?: Maybe<String>;
-  location_gte?: Maybe<String>;
-  location_contains?: Maybe<String>;
-  location_not_contains?: Maybe<String>;
-  location_starts_with?: Maybe<String>;
-  location_not_starts_with?: Maybe<String>;
-  location_ends_with?: Maybe<String>;
-  location_not_ends_with?: Maybe<String>;
-  postedBy?: Maybe<UserWhereInput>;
-  comments_every?: Maybe<CommentWhereInput>;
-  comments_some?: Maybe<CommentWhereInput>;
-  comments_none?: Maybe<CommentWhereInput>;
-  AND?: Maybe<PostWhereInput[] | PostWhereInput>;
-  OR?: Maybe<PostWhereInput[] | PostWhereInput>;
-  NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
+  xDistance?: Maybe<Float>;
+  xDistance_not?: Maybe<Float>;
+  xDistance_in?: Maybe<Float[] | Float>;
+  xDistance_not_in?: Maybe<Float[] | Float>;
+  xDistance_lt?: Maybe<Float>;
+  xDistance_lte?: Maybe<Float>;
+  xDistance_gt?: Maybe<Float>;
+  xDistance_gte?: Maybe<Float>;
+  yDistance?: Maybe<Float>;
+  yDistance_not?: Maybe<Float>;
+  yDistance_in?: Maybe<Float[] | Float>;
+  yDistance_not_in?: Maybe<Float[] | Float>;
+  yDistance_lt?: Maybe<Float>;
+  yDistance_lte?: Maybe<Float>;
+  yDistance_gt?: Maybe<Float>;
+  yDistance_gte?: Maybe<Float>;
+  zDistance?: Maybe<Float>;
+  zDistance_not?: Maybe<Float>;
+  zDistance_in?: Maybe<Float[] | Float>;
+  zDistance_not_in?: Maybe<Float[] | Float>;
+  zDistance_lt?: Maybe<Float>;
+  zDistance_lte?: Maybe<Float>;
+  zDistance_gt?: Maybe<Float>;
+  zDistance_gte?: Maybe<Float>;
+  height?: Maybe<Float>;
+  height_not?: Maybe<Float>;
+  height_in?: Maybe<Float[] | Float>;
+  height_not_in?: Maybe<Float[] | Float>;
+  height_lt?: Maybe<Float>;
+  height_lte?: Maybe<Float>;
+  height_gt?: Maybe<Float>;
+  height_gte?: Maybe<Float>;
+  width?: Maybe<Float>;
+  width_not?: Maybe<Float>;
+  width_in?: Maybe<Float[] | Float>;
+  width_not_in?: Maybe<Float[] | Float>;
+  width_lt?: Maybe<Float>;
+  width_lte?: Maybe<Float>;
+  width_gt?: Maybe<Float>;
+  width_gte?: Maybe<Float>;
+  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutPostDataInput;
+  create: CommentCreateWithoutPostInput;
+}
+
+export interface CommentCreateInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  post: PostCreateOneWithoutCommentsInput;
+  user: UserCreateOneWithoutCommentsInput;
 }
 
 export interface CommentScalarWhereInput {
@@ -593,72 +809,22 @@ export interface CommentScalarWhereInput {
   NOT?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
 }
 
-export interface PostSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<PostWhereInput>;
-  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+export interface PostCreateWithoutCommentsInput {
+  id?: Maybe<ID_Input>;
+  description: String;
+  privacy: Boolean;
+  xDistance: Float;
+  yDistance: Float;
+  zDistance: Float;
+  height: Float;
+  width: Float;
+  postPostedBy: UserCreateOneWithoutPostsInput;
+  marker: MarkerCreateOneInput;
 }
 
 export interface CommentUpdateManyWithWhereNestedInput {
   where: CommentScalarWhereInput;
   data: CommentUpdateManyDataInput;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  posts?: Maybe<PostCreateManyWithoutPostedByInput>;
-  comments?: Maybe<CommentCreateManyWithoutUserInput>;
-}
-
-export interface CommentUpdateManyDataInput {
-  text?: Maybe<String>;
-}
-
-export interface PostCreateInput {
-  id?: Maybe<ID_Input>;
-  description: String;
-  privacy: Boolean;
-  location: String;
-  postedBy: UserCreateOneWithoutPostsInput;
-  comments?: Maybe<CommentCreateManyWithoutPostInput>;
-}
-
-export interface UserUpsertWithoutPostsInput {
-  update: UserUpdateWithoutPostsDataInput;
-  create: UserCreateWithoutPostsInput;
-}
-
-export interface PostUpdateManyDataInput {
-  description?: Maybe<String>;
-  privacy?: Maybe<Boolean>;
-  location?: Maybe<String>;
-}
-
-export interface PostUpsertWithoutCommentsInput {
-  update: PostUpdateWithoutCommentsDataInput;
-  create: PostCreateWithoutCommentsInput;
-}
-
-export interface CommentCreateInput {
-  id?: Maybe<ID_Input>;
-  text: String;
-  post: PostCreateOneWithoutCommentsInput;
-  user: UserCreateOneWithoutCommentsInput;
-}
-
-export interface UserUpdateOneRequiredWithoutCommentsInput {
-  create?: Maybe<UserCreateWithoutCommentsInput>;
-  update?: Maybe<UserUpdateWithoutCommentsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutCommentsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserCreateWithoutPostsInput {
@@ -667,13 +833,405 @@ export interface UserCreateWithoutPostsInput {
   email: String;
   password: String;
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
+  markers?: Maybe<MarkerCreateManyWithoutMarkerPostedByInput>;
 }
 
-export interface UserUpdateWithoutCommentsDataInput {
+export interface CommentUpdateManyDataInput {
+  text?: Maybe<String>;
+}
+
+export interface CommentCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  post: PostCreateOneWithoutCommentsInput;
+}
+
+export interface MarkerUpdateManyWithoutMarkerPostedByInput {
+  create?: Maybe<
+    | MarkerCreateWithoutMarkerPostedByInput[]
+    | MarkerCreateWithoutMarkerPostedByInput
+  >;
+  delete?: Maybe<MarkerWhereUniqueInput[] | MarkerWhereUniqueInput>;
+  connect?: Maybe<MarkerWhereUniqueInput[] | MarkerWhereUniqueInput>;
+  set?: Maybe<MarkerWhereUniqueInput[] | MarkerWhereUniqueInput>;
+  disconnect?: Maybe<MarkerWhereUniqueInput[] | MarkerWhereUniqueInput>;
+  update?: Maybe<
+    | MarkerUpdateWithWhereUniqueWithoutMarkerPostedByInput[]
+    | MarkerUpdateWithWhereUniqueWithoutMarkerPostedByInput
+  >;
+  upsert?: Maybe<
+    | MarkerUpsertWithWhereUniqueWithoutMarkerPostedByInput[]
+    | MarkerUpsertWithWhereUniqueWithoutMarkerPostedByInput
+  >;
+  deleteMany?: Maybe<MarkerScalarWhereInput[] | MarkerScalarWhereInput>;
+  updateMany?: Maybe<
+    | MarkerUpdateManyWithWhereNestedInput[]
+    | MarkerUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface MarkerCreateWithoutMarkerPostedByInput {
+  id?: Maybe<ID_Input>;
+  description: String;
+  imageUrl: String;
+  longitude: Float;
+  latitude: Float;
+  height: Float;
+  plane: String;
+}
+
+export interface MarkerUpdateWithWhereUniqueWithoutMarkerPostedByInput {
+  where: MarkerWhereUniqueInput;
+  data: MarkerUpdateWithoutMarkerPostedByDataInput;
+}
+
+export interface MarkerCreateInput {
+  id?: Maybe<ID_Input>;
+  description: String;
+  imageUrl: String;
+  longitude: Float;
+  latitude: Float;
+  height: Float;
+  markerPostedBy: UserCreateOneWithoutMarkersInput;
+  plane: String;
+}
+
+export interface MarkerUpdateWithoutMarkerPostedByDataInput {
+  description?: Maybe<String>;
+  imageUrl?: Maybe<String>;
+  longitude?: Maybe<Float>;
+  latitude?: Maybe<Float>;
+  height?: Maybe<Float>;
+  plane?: Maybe<String>;
+}
+
+export interface PostWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  privacy?: Maybe<Boolean>;
+  privacy_not?: Maybe<Boolean>;
+  xDistance?: Maybe<Float>;
+  xDistance_not?: Maybe<Float>;
+  xDistance_in?: Maybe<Float[] | Float>;
+  xDistance_not_in?: Maybe<Float[] | Float>;
+  xDistance_lt?: Maybe<Float>;
+  xDistance_lte?: Maybe<Float>;
+  xDistance_gt?: Maybe<Float>;
+  xDistance_gte?: Maybe<Float>;
+  yDistance?: Maybe<Float>;
+  yDistance_not?: Maybe<Float>;
+  yDistance_in?: Maybe<Float[] | Float>;
+  yDistance_not_in?: Maybe<Float[] | Float>;
+  yDistance_lt?: Maybe<Float>;
+  yDistance_lte?: Maybe<Float>;
+  yDistance_gt?: Maybe<Float>;
+  yDistance_gte?: Maybe<Float>;
+  zDistance?: Maybe<Float>;
+  zDistance_not?: Maybe<Float>;
+  zDistance_in?: Maybe<Float[] | Float>;
+  zDistance_not_in?: Maybe<Float[] | Float>;
+  zDistance_lt?: Maybe<Float>;
+  zDistance_lte?: Maybe<Float>;
+  zDistance_gt?: Maybe<Float>;
+  zDistance_gte?: Maybe<Float>;
+  height?: Maybe<Float>;
+  height_not?: Maybe<Float>;
+  height_in?: Maybe<Float[] | Float>;
+  height_not_in?: Maybe<Float[] | Float>;
+  height_lt?: Maybe<Float>;
+  height_lte?: Maybe<Float>;
+  height_gt?: Maybe<Float>;
+  height_gte?: Maybe<Float>;
+  width?: Maybe<Float>;
+  width_not?: Maybe<Float>;
+  width_in?: Maybe<Float[] | Float>;
+  width_not_in?: Maybe<Float[] | Float>;
+  width_lt?: Maybe<Float>;
+  width_lte?: Maybe<Float>;
+  width_gt?: Maybe<Float>;
+  width_gte?: Maybe<Float>;
+  postPostedBy?: Maybe<UserWhereInput>;
+  comments_every?: Maybe<CommentWhereInput>;
+  comments_some?: Maybe<CommentWhereInput>;
+  comments_none?: Maybe<CommentWhereInput>;
+  marker?: Maybe<MarkerWhereInput>;
+  AND?: Maybe<PostWhereInput[] | PostWhereInput>;
+  OR?: Maybe<PostWhereInput[] | PostWhereInput>;
+  NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
+}
+
+export interface MarkerUpsertWithWhereUniqueWithoutMarkerPostedByInput {
+  where: MarkerWhereUniqueInput;
+  update: MarkerUpdateWithoutMarkerPostedByDataInput;
+  create: MarkerCreateWithoutMarkerPostedByInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface MarkerScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  imageUrl?: Maybe<String>;
+  imageUrl_not?: Maybe<String>;
+  imageUrl_in?: Maybe<String[] | String>;
+  imageUrl_not_in?: Maybe<String[] | String>;
+  imageUrl_lt?: Maybe<String>;
+  imageUrl_lte?: Maybe<String>;
+  imageUrl_gt?: Maybe<String>;
+  imageUrl_gte?: Maybe<String>;
+  imageUrl_contains?: Maybe<String>;
+  imageUrl_not_contains?: Maybe<String>;
+  imageUrl_starts_with?: Maybe<String>;
+  imageUrl_not_starts_with?: Maybe<String>;
+  imageUrl_ends_with?: Maybe<String>;
+  imageUrl_not_ends_with?: Maybe<String>;
+  longitude?: Maybe<Float>;
+  longitude_not?: Maybe<Float>;
+  longitude_in?: Maybe<Float[] | Float>;
+  longitude_not_in?: Maybe<Float[] | Float>;
+  longitude_lt?: Maybe<Float>;
+  longitude_lte?: Maybe<Float>;
+  longitude_gt?: Maybe<Float>;
+  longitude_gte?: Maybe<Float>;
+  latitude?: Maybe<Float>;
+  latitude_not?: Maybe<Float>;
+  latitude_in?: Maybe<Float[] | Float>;
+  latitude_not_in?: Maybe<Float[] | Float>;
+  latitude_lt?: Maybe<Float>;
+  latitude_lte?: Maybe<Float>;
+  latitude_gt?: Maybe<Float>;
+  latitude_gte?: Maybe<Float>;
+  height?: Maybe<Float>;
+  height_not?: Maybe<Float>;
+  height_in?: Maybe<Float[] | Float>;
+  height_not_in?: Maybe<Float[] | Float>;
+  height_lt?: Maybe<Float>;
+  height_lte?: Maybe<Float>;
+  height_gt?: Maybe<Float>;
+  height_gte?: Maybe<Float>;
+  plane?: Maybe<String>;
+  plane_not?: Maybe<String>;
+  plane_in?: Maybe<String[] | String>;
+  plane_not_in?: Maybe<String[] | String>;
+  plane_lt?: Maybe<String>;
+  plane_lte?: Maybe<String>;
+  plane_gt?: Maybe<String>;
+  plane_gte?: Maybe<String>;
+  plane_contains?: Maybe<String>;
+  plane_not_contains?: Maybe<String>;
+  plane_starts_with?: Maybe<String>;
+  plane_not_starts_with?: Maybe<String>;
+  plane_ends_with?: Maybe<String>;
+  plane_not_ends_with?: Maybe<String>;
+  AND?: Maybe<MarkerScalarWhereInput[] | MarkerScalarWhereInput>;
+  OR?: Maybe<MarkerScalarWhereInput[] | MarkerScalarWhereInput>;
+  NOT?: Maybe<MarkerScalarWhereInput[] | MarkerScalarWhereInput>;
+}
+
+export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  posts?: Maybe<PostUpdateManyWithoutPostedByInput>;
+}
+
+export interface MarkerUpdateManyWithWhereNestedInput {
+  where: MarkerScalarWhereInput;
+  data: MarkerUpdateManyDataInput;
+}
+
+export interface PostUpdateInput {
+  description?: Maybe<String>;
+  privacy?: Maybe<Boolean>;
+  xDistance?: Maybe<Float>;
+  yDistance?: Maybe<Float>;
+  zDistance?: Maybe<Float>;
+  height?: Maybe<Float>;
+  width?: Maybe<Float>;
+  postPostedBy?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+  comments?: Maybe<CommentUpdateManyWithoutPostInput>;
+  marker?: Maybe<MarkerUpdateOneRequiredInput>;
+}
+
+export interface MarkerUpdateManyDataInput {
+  description?: Maybe<String>;
+  imageUrl?: Maybe<String>;
+  longitude?: Maybe<Float>;
+  latitude?: Maybe<Float>;
+  height?: Maybe<Float>;
+  plane?: Maybe<String>;
+}
+
+export interface MarkerUpdateInput {
+  description?: Maybe<String>;
+  imageUrl?: Maybe<String>;
+  longitude?: Maybe<Float>;
+  latitude?: Maybe<Float>;
+  height?: Maybe<Float>;
+  markerPostedBy?: Maybe<UserUpdateOneRequiredWithoutMarkersInput>;
+  plane?: Maybe<String>;
+}
+
+export interface UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput;
+  create: UserCreateWithoutPostsInput;
+}
+
+export interface MarkerUpsertNestedInput {
+  update: MarkerUpdateDataInput;
+  create: MarkerCreateInput;
+}
+
+export interface MarkerUpdateOneRequiredInput {
+  create?: Maybe<MarkerCreateInput>;
+  update?: Maybe<MarkerUpdateDataInput>;
+  upsert?: Maybe<MarkerUpsertNestedInput>;
+  connect?: Maybe<MarkerWhereUniqueInput>;
+}
+
+export interface PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput;
+  data: PostUpdateManyDataInput;
+}
+
+export interface MarkerUpdateDataInput {
+  description?: Maybe<String>;
+  imageUrl?: Maybe<String>;
+  longitude?: Maybe<Float>;
+  latitude?: Maybe<Float>;
+  height?: Maybe<Float>;
+  markerPostedBy?: Maybe<UserUpdateOneRequiredWithoutMarkersInput>;
+  plane?: Maybe<String>;
+}
+
+export interface PostCreateOneWithoutCommentsInput {
+  create?: Maybe<PostCreateWithoutCommentsInput>;
+  connect?: Maybe<PostWhereUniqueInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutMarkersInput {
+  create?: Maybe<UserCreateWithoutMarkersInput>;
+  update?: Maybe<UserUpdateWithoutMarkersDataInput>;
+  upsert?: Maybe<UserUpsertWithoutMarkersInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface CommentCreateManyWithoutUserInput {
+  create?: Maybe<
+    CommentCreateWithoutUserInput[] | CommentCreateWithoutUserInput
+  >;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutMarkersDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  posts?: Maybe<PostUpdateManyWithoutPostPostedByInput>;
+  comments?: Maybe<CommentUpdateManyWithoutUserInput>;
+}
+
+export interface MarkerCreateOneInput {
+  create?: Maybe<MarkerCreateInput>;
+  connect?: Maybe<MarkerWhereUniqueInput>;
+}
+
+export interface PostUpdateManyWithoutPostPostedByInput {
+  create?: Maybe<
+    PostCreateWithoutPostPostedByInput[] | PostCreateWithoutPostPostedByInput
+  >;
+  delete?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  set?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  disconnect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  update?: Maybe<
+    | PostUpdateWithWhereUniqueWithoutPostPostedByInput[]
+    | PostUpdateWithWhereUniqueWithoutPostPostedByInput
+  >;
+  upsert?: Maybe<
+    | PostUpsertWithWhereUniqueWithoutPostPostedByInput[]
+    | PostUpsertWithWhereUniqueWithoutPostPostedByInput
+  >;
+  deleteMany?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  updateMany?: Maybe<
+    PostUpdateManyWithWhereNestedInput[] | PostUpdateManyWithWhereNestedInput
+  >;
 }
 
 export interface CommentWhereInput {
@@ -720,35 +1278,35 @@ export interface CommentWhereInput {
   NOT?: Maybe<CommentWhereInput[] | CommentWhereInput>;
 }
 
-export interface PostUpdateManyWithoutPostedByInput {
-  create?: Maybe<
-    PostCreateWithoutPostedByInput[] | PostCreateWithoutPostedByInput
-  >;
-  delete?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  set?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  disconnect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  update?: Maybe<
-    | PostUpdateWithWhereUniqueWithoutPostedByInput[]
-    | PostUpdateWithWhereUniqueWithoutPostedByInput
-  >;
-  upsert?: Maybe<
-    | PostUpsertWithWhereUniqueWithoutPostedByInput[]
-    | PostUpsertWithWhereUniqueWithoutPostedByInput
-  >;
-  deleteMany?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  updateMany?: Maybe<
-    PostUpdateManyWithWhereNestedInput[] | PostUpdateManyWithWhereNestedInput
-  >;
+export interface PostUpdateWithWhereUniqueWithoutPostPostedByInput {
+  where: PostWhereUniqueInput;
+  data: PostUpdateWithoutPostPostedByDataInput;
 }
 
-export type PostWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  posts?: Maybe<PostCreateManyWithoutPostPostedByInput>;
+  comments?: Maybe<CommentCreateManyWithoutUserInput>;
+  markers?: Maybe<MarkerCreateManyWithoutMarkerPostedByInput>;
+}
 
-export interface CommentUpdateWithWhereUniqueWithoutPostInput {
-  where: CommentWhereUniqueInput;
-  data: CommentUpdateWithoutPostDataInput;
+export interface PostUpdateWithoutPostPostedByDataInput {
+  description?: Maybe<String>;
+  privacy?: Maybe<Boolean>;
+  xDistance?: Maybe<Float>;
+  yDistance?: Maybe<Float>;
+  zDistance?: Maybe<Float>;
+  height?: Maybe<Float>;
+  width?: Maybe<Float>;
+  comments?: Maybe<CommentUpdateManyWithoutPostInput>;
+  marker?: Maybe<MarkerUpdateOneRequiredInput>;
+}
+
+export interface CommentUpdateManyMutationInput {
+  text?: Maybe<String>;
 }
 
 export interface CommentUpdateManyWithoutPostInput {
@@ -774,99 +1332,77 @@ export interface CommentUpdateManyWithoutPostInput {
   >;
 }
 
-export interface PostUpdateWithoutPostedByDataInput {
-  description?: Maybe<String>;
-  privacy?: Maybe<Boolean>;
-  location?: Maybe<String>;
-  comments?: Maybe<CommentUpdateManyWithoutPostInput>;
+export interface MarkerCreateManyWithoutMarkerPostedByInput {
+  create?: Maybe<
+    | MarkerCreateWithoutMarkerPostedByInput[]
+    | MarkerCreateWithoutMarkerPostedByInput
+  >;
+  connect?: Maybe<MarkerWhereUniqueInput[] | MarkerWhereUniqueInput>;
 }
 
-export interface PostUpdateWithWhereUniqueWithoutPostedByInput {
-  where: PostWhereUniqueInput;
-  data: PostUpdateWithoutPostedByDataInput;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface UserUpdateManyMutationInput {
+export interface UserUpdateWithoutCommentsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+  posts?: Maybe<PostUpdateManyWithoutPostPostedByInput>;
+  markers?: Maybe<MarkerUpdateManyWithoutMarkerPostedByInput>;
 }
 
-export interface CommentCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  text: String;
-  post: PostCreateOneWithoutCommentsInput;
+export interface UserUpdateOneRequiredWithoutCommentsInput {
+  create?: Maybe<UserCreateWithoutCommentsInput>;
+  update?: Maybe<UserUpdateWithoutCommentsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutCommentsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface PostCreateWithoutCommentsInput {
+export interface CommentUpdateWithoutPostDataInput {
+  text?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutCommentsInput>;
+}
+
+export interface CommentUpdateWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput;
+  data: CommentUpdateWithoutPostDataInput;
+}
+
+export interface UserCreateOneWithoutMarkersInput {
+  create?: Maybe<UserCreateWithoutMarkersInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateOneWithoutPostsInput {
+  create?: Maybe<UserCreateWithoutPostsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutMarkersInput {
+  update: UserUpdateWithoutMarkersDataInput;
+  create: UserCreateWithoutMarkersInput;
+}
+
+export interface PostCreateInput {
   id?: Maybe<ID_Input>;
   description: String;
   privacy: Boolean;
-  location: String;
-  postedBy: UserCreateOneWithoutPostsInput;
+  xDistance: Float;
+  yDistance: Float;
+  zDistance: Float;
+  height: Float;
+  width: Float;
+  postPostedBy: UserCreateOneWithoutPostsInput;
+  comments?: Maybe<CommentCreateManyWithoutPostInput>;
+  marker: MarkerCreateOneInput;
 }
 
-export interface PostScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  privacy?: Maybe<Boolean>;
-  privacy_not?: Maybe<Boolean>;
-  location?: Maybe<String>;
-  location_not?: Maybe<String>;
-  location_in?: Maybe<String[] | String>;
-  location_not_in?: Maybe<String[] | String>;
-  location_lt?: Maybe<String>;
-  location_lte?: Maybe<String>;
-  location_gt?: Maybe<String>;
-  location_gte?: Maybe<String>;
-  location_contains?: Maybe<String>;
-  location_not_contains?: Maybe<String>;
-  location_starts_with?: Maybe<String>;
-  location_not_starts_with?: Maybe<String>;
-  location_ends_with?: Maybe<String>;
-  location_not_ends_with?: Maybe<String>;
-  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+export interface MarkerSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<MarkerWhereInput>;
+  AND?: Maybe<MarkerSubscriptionWhereInput[] | MarkerSubscriptionWhereInput>;
+  OR?: Maybe<MarkerSubscriptionWhereInput[] | MarkerSubscriptionWhereInput>;
+  NOT?: Maybe<MarkerSubscriptionWhereInput[] | MarkerSubscriptionWhereInput>;
 }
 
 export interface NodeNode {
@@ -898,21 +1434,27 @@ export interface UserPreviousValuesSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
-export interface CommentEdge {
-  node: Comment;
-  cursor: String;
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
 }
 
-export interface CommentEdgePromise extends Promise<CommentEdge>, Fragmentable {
-  node: <T = CommentPromise>() => T;
-  cursor: () => Promise<String>;
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
 }
 
-export interface CommentEdgeSubscription
-  extends Promise<AsyncIterator<CommentEdge>>,
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
     Fragmentable {
-  node: <T = CommentSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface User {
@@ -939,6 +1481,15 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   comments: <T = FragmentableArray<Comment>>(args?: {
     where?: CommentWhereInput;
     orderBy?: CommentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  markers: <T = FragmentableArray<Marker>>(args?: {
+    where?: MarkerWhereInput;
+    orderBy?: MarkerOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -972,6 +1523,15 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  markers: <T = Promise<AsyncIterator<MarkerSubscription>>>(args?: {
+    where?: MarkerWhereInput;
+    orderBy?: MarkerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserNullablePromise
@@ -999,45 +1559,15 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  markers: <T = FragmentableArray<Marker>>(args?: {
+    where?: MarkerWhereInput;
+    orderBy?: MarkerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface CommentConnection {
@@ -1059,6 +1589,73 @@ export interface CommentConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<CommentEdgeSubscription>>>() => T;
   aggregate: <T = AggregateCommentSubscription>() => T;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Marker {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  description: String;
+  imageUrl: String;
+  longitude: Float;
+  latitude: Float;
+  height: Float;
+  plane: String;
+}
+
+export interface MarkerPromise extends Promise<Marker>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  imageUrl: () => Promise<String>;
+  longitude: () => Promise<Float>;
+  latitude: () => Promise<Float>;
+  height: () => Promise<Float>;
+  markerPostedBy: <T = UserPromise>() => T;
+  plane: () => Promise<String>;
+}
+
+export interface MarkerSubscription
+  extends Promise<AsyncIterator<Marker>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  description: () => Promise<AsyncIterator<String>>;
+  imageUrl: () => Promise<AsyncIterator<String>>;
+  longitude: () => Promise<AsyncIterator<Float>>;
+  latitude: () => Promise<AsyncIterator<Float>>;
+  height: () => Promise<AsyncIterator<Float>>;
+  markerPostedBy: <T = UserSubscription>() => T;
+  plane: () => Promise<AsyncIterator<String>>;
+}
+
+export interface MarkerNullablePromise
+  extends Promise<Marker | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  imageUrl: () => Promise<String>;
+  longitude: () => Promise<Float>;
+  latitude: () => Promise<Float>;
+  height: () => Promise<Float>;
+  markerPostedBy: <T = UserPromise>() => T;
+  plane: () => Promise<String>;
 }
 
 export interface UserConnection {
@@ -1087,7 +1684,11 @@ export interface Post {
   createdAt: DateTimeOutput;
   description: String;
   privacy: Boolean;
-  location: String;
+  xDistance: Float;
+  yDistance: Float;
+  zDistance: Float;
+  height: Float;
+  width: Float;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
@@ -1095,8 +1696,12 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   description: () => Promise<String>;
   privacy: () => Promise<Boolean>;
-  location: () => Promise<String>;
-  postedBy: <T = UserPromise>() => T;
+  xDistance: () => Promise<Float>;
+  yDistance: () => Promise<Float>;
+  zDistance: () => Promise<Float>;
+  height: () => Promise<Float>;
+  width: () => Promise<Float>;
+  postPostedBy: <T = UserPromise>() => T;
   comments: <T = FragmentableArray<Comment>>(args?: {
     where?: CommentWhereInput;
     orderBy?: CommentOrderByInput;
@@ -1106,6 +1711,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  marker: <T = MarkerPromise>() => T;
 }
 
 export interface PostSubscription
@@ -1115,8 +1721,12 @@ export interface PostSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   description: () => Promise<AsyncIterator<String>>;
   privacy: () => Promise<AsyncIterator<Boolean>>;
-  location: () => Promise<AsyncIterator<String>>;
-  postedBy: <T = UserSubscription>() => T;
+  xDistance: () => Promise<AsyncIterator<Float>>;
+  yDistance: () => Promise<AsyncIterator<Float>>;
+  zDistance: () => Promise<AsyncIterator<Float>>;
+  height: () => Promise<AsyncIterator<Float>>;
+  width: () => Promise<AsyncIterator<Float>>;
+  postPostedBy: <T = UserSubscription>() => T;
   comments: <T = Promise<AsyncIterator<CommentSubscription>>>(args?: {
     where?: CommentWhereInput;
     orderBy?: CommentOrderByInput;
@@ -1126,6 +1736,7 @@ export interface PostSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  marker: <T = MarkerSubscription>() => T;
 }
 
 export interface PostNullablePromise
@@ -1135,8 +1746,12 @@ export interface PostNullablePromise
   createdAt: () => Promise<DateTimeOutput>;
   description: () => Promise<String>;
   privacy: () => Promise<Boolean>;
-  location: () => Promise<String>;
-  postedBy: <T = UserPromise>() => T;
+  xDistance: () => Promise<Float>;
+  yDistance: () => Promise<Float>;
+  zDistance: () => Promise<Float>;
+  height: () => Promise<Float>;
+  width: () => Promise<Float>;
+  postPostedBy: <T = UserPromise>() => T;
   comments: <T = FragmentableArray<Comment>>(args?: {
     where?: CommentWhereInput;
     orderBy?: CommentOrderByInput;
@@ -1146,6 +1761,7 @@ export interface PostNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  marker: <T = MarkerPromise>() => T;
 }
 
 export interface AggregatePost {
@@ -1162,59 +1778,6 @@ export interface AggregatePostSubscription
   extends Promise<AsyncIterator<AggregatePost>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface PostPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  description: String;
-  privacy: Boolean;
-  location: String;
-}
-
-export interface PostPreviousValuesPromise
-  extends Promise<PostPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
-  privacy: () => Promise<Boolean>;
-  location: () => Promise<String>;
-}
-
-export interface PostPreviousValuesSubscription
-  extends Promise<AsyncIterator<PostPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  description: () => Promise<AsyncIterator<String>>;
-  privacy: () => Promise<AsyncIterator<Boolean>>;
-  location: () => Promise<AsyncIterator<String>>;
-}
-
-export interface PostSubscriptionPayload {
-  mutation: MutationType;
-  node: Post;
-  updatedFields: String[];
-  previousValues: PostPreviousValues;
-}
-
-export interface PostSubscriptionPayloadPromise
-  extends Promise<PostSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PostPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PostPreviousValuesPromise>() => T;
-}
-
-export interface PostSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PostSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PostPreviousValuesSubscription>() => T;
 }
 
 export interface Comment {
@@ -1251,26 +1814,119 @@ export interface CommentNullablePromise
   createdAt: () => Promise<DateTimeOutput>;
 }
 
-export interface CommentPreviousValues {
-  id: ID_Output;
-  text: String;
-  createdAt: DateTimeOutput;
+export interface PostConnection {
+  pageInfo: PageInfo;
+  edges: PostEdge[];
 }
 
-export interface CommentPreviousValuesPromise
-  extends Promise<CommentPreviousValues>,
+export interface PostConnectionPromise
+  extends Promise<PostConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PostEdge>>() => T;
+  aggregate: <T = AggregatePostPromise>() => T;
+}
+
+export interface PostConnectionSubscription
+  extends Promise<AsyncIterator<PostConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePostSubscription>() => T;
+}
+
+export interface PostPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  description: String;
+  privacy: Boolean;
+  xDistance: Float;
+  yDistance: Float;
+  zDistance: Float;
+  height: Float;
+  width: Float;
+}
+
+export interface PostPreviousValuesPromise
+  extends Promise<PostPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  privacy: () => Promise<Boolean>;
+  xDistance: () => Promise<Float>;
+  yDistance: () => Promise<Float>;
+  zDistance: () => Promise<Float>;
+  height: () => Promise<Float>;
+  width: () => Promise<Float>;
 }
 
-export interface CommentPreviousValuesSubscription
-  extends Promise<AsyncIterator<CommentPreviousValues>>,
+export interface PostPreviousValuesSubscription
+  extends Promise<AsyncIterator<PostPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  text: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  description: () => Promise<AsyncIterator<String>>;
+  privacy: () => Promise<AsyncIterator<Boolean>>;
+  xDistance: () => Promise<AsyncIterator<Float>>;
+  yDistance: () => Promise<AsyncIterator<Float>>;
+  zDistance: () => Promise<AsyncIterator<Float>>;
+  height: () => Promise<AsyncIterator<Float>>;
+  width: () => Promise<AsyncIterator<Float>>;
+}
+
+export interface MarkerPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  description: String;
+  imageUrl: String;
+  longitude: Float;
+  latitude: Float;
+  height: Float;
+  plane: String;
+}
+
+export interface MarkerPreviousValuesPromise
+  extends Promise<MarkerPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  imageUrl: () => Promise<String>;
+  longitude: () => Promise<Float>;
+  latitude: () => Promise<Float>;
+  height: () => Promise<Float>;
+  plane: () => Promise<String>;
+}
+
+export interface MarkerPreviousValuesSubscription
+  extends Promise<AsyncIterator<MarkerPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  description: () => Promise<AsyncIterator<String>>;
+  imageUrl: () => Promise<AsyncIterator<String>>;
+  longitude: () => Promise<AsyncIterator<Float>>;
+  latitude: () => Promise<AsyncIterator<Float>>;
+  height: () => Promise<AsyncIterator<Float>>;
+  plane: () => Promise<AsyncIterator<String>>;
+}
+
+export interface PostEdge {
+  node: Post;
+  cursor: String;
+}
+
+export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
+  node: <T = PostPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PostEdgeSubscription
+  extends Promise<AsyncIterator<PostEdge>>,
+    Fragmentable {
+  node: <T = PostSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface CommentSubscriptionPayload {
@@ -1298,23 +1954,6 @@ export interface CommentSubscriptionPayloadSubscription
   previousValues: <T = CommentPreviousValuesSubscription>() => T;
 }
 
-export interface PostEdge {
-  node: Post;
-  cursor: String;
-}
-
-export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
-  node: <T = PostPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PostEdgeSubscription
-  extends Promise<AsyncIterator<PostEdge>>,
-    Fragmentable {
-  node: <T = PostSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
 export interface BatchPayload {
   count: Long;
 }
@@ -1331,42 +1970,130 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface PostConnection {
+export interface MarkerConnection {
   pageInfo: PageInfo;
-  edges: PostEdge[];
+  edges: MarkerEdge[];
 }
 
-export interface PostConnectionPromise
-  extends Promise<PostConnection>,
+export interface MarkerConnectionPromise
+  extends Promise<MarkerConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PostEdge>>() => T;
-  aggregate: <T = AggregatePostPromise>() => T;
+  edges: <T = FragmentableArray<MarkerEdge>>() => T;
+  aggregate: <T = AggregateMarkerPromise>() => T;
 }
 
-export interface PostConnectionSubscription
-  extends Promise<AsyncIterator<PostConnection>>,
+export interface MarkerConnectionSubscription
+  extends Promise<AsyncIterator<MarkerConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePostSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<MarkerEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateMarkerSubscription>() => T;
 }
 
-export interface UserEdge {
-  node: User;
+export interface CommentEdge {
+  node: Comment;
   cursor: String;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
+export interface CommentEdgePromise extends Promise<CommentEdge>, Fragmentable {
+  node: <T = CommentPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface CommentEdgeSubscription
+  extends Promise<AsyncIterator<CommentEdge>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
+  node: <T = CommentSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface MarkerSubscriptionPayload {
+  mutation: MutationType;
+  node: Marker;
+  updatedFields: String[];
+  previousValues: MarkerPreviousValues;
+}
+
+export interface MarkerSubscriptionPayloadPromise
+  extends Promise<MarkerSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = MarkerPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = MarkerPreviousValuesPromise>() => T;
+}
+
+export interface MarkerSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<MarkerSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = MarkerSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = MarkerPreviousValuesSubscription>() => T;
+}
+
+export interface PostSubscriptionPayload {
+  mutation: MutationType;
+  node: Post;
+  updatedFields: String[];
+  previousValues: PostPreviousValues;
+}
+
+export interface PostSubscriptionPayloadPromise
+  extends Promise<PostSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = PostPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PostPreviousValuesPromise>() => T;
+}
+
+export interface PostSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PostSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PostPreviousValuesSubscription>() => T;
+}
+
+export interface CommentPreviousValues {
+  id: ID_Output;
+  text: String;
+  createdAt: DateTimeOutput;
+}
+
+export interface CommentPreviousValuesPromise
+  extends Promise<CommentPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface CommentPreviousValuesSubscription
+  extends Promise<AsyncIterator<CommentPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface AggregateMarker {
+  count: Int;
+}
+
+export interface AggregateMarkerPromise
+  extends Promise<AggregateMarker>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateMarkerSubscription
+  extends Promise<AsyncIterator<AggregateMarker>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1410,10 +2137,44 @@ export interface AggregateCommentSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface MarkerEdge {
+  node: Marker;
+  cursor: String;
+}
+
+export interface MarkerEdgePromise extends Promise<MarkerEdge>, Fragmentable {
+  node: <T = MarkerPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface MarkerEdgeSubscription
+  extends Promise<AsyncIterator<MarkerEdge>>,
+    Fragmentable {
+  node: <T = MarkerSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
 /*
-The `Boolean` scalar type represents `true` or `false`.
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
 */
-export type Boolean = boolean;
+export type Float = number;
 
 export type Long = string;
 
@@ -1424,6 +2185,16 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -1432,11 +2203,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
@@ -1450,6 +2216,10 @@ export type Int = number;
 export const models: Model[] = [
   {
     name: "Post",
+    embedded: false
+  },
+  {
+    name: "Marker",
     embedded: false
   },
   {
