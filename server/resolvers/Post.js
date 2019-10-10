@@ -1,6 +1,6 @@
 
 function postPostedBy(parent, args, context) {
-  return context.prisma.post({ id: parent.id }).postedBy()
+  return context.prisma.post({ id: parent.id }).postPostedBy()
 }
 
 function comments(parent, args, context) {

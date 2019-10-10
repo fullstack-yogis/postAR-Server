@@ -6,7 +6,7 @@ type Post {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
-  postedBy: User!
+  postPostedBy: User!
   comments: [Comment!]!
   marker: Marker!
 }
@@ -19,7 +19,7 @@ type Marker {
   longitude: Float!
   latitude: Float!
   height: Float!
-  postedBy: User!
+  markerPostedBy: User!
 }
 
 type User {

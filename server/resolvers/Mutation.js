@@ -38,11 +38,16 @@ async function login(parent, args, context, info) {
 function post(parent, args, context, info) {
   // console.log('context-----------', context)
   // const userId = getUserId(context);
+
+  // post(xDistance: Float!, yDistance: Float!, zDistance: Float!, privacy: Boolean!, description: String!): Post!
   return context.prisma.createPost({
     description: args.description,
     privacy: args.privacy,
-    location: args.location,
-    postedBy: { connect: { id: 'ck1jqz46airvr0b09xxjbloni' } },
+    xDistance: args.xDistance,
+    yDistance: args.yDistance,
+    zDistance: args.zDistance,
+    postPostedBy: { connect: { id: 'ck1l39efcctbp0b40lft3j8dm' } },
+
   });
 }
 
@@ -65,7 +70,7 @@ async function addMarker(parent, args, context, info) {
     longitude: args.longitude,
     latitude: args.latitude,
     height: args.height,
-    postedBy: { connect: { id: userId } },
+    markerPostedBy: { connect: { id: userId } },
   });
 }
 

@@ -23,18 +23,18 @@ type Post {
   zDistance: Float!
   privacy: Boolean!
   marker: Marker!
-  postedBy: User!
+  postPostedBy: User!
   comments: [Comment!]!
 }
 
 type Marker {
   id: ID!
   imageUrl: String!
-  description: Text!
+  description: String!
   longitude: Float!
   latitude: Float!
   height: Float!
-  postedBy: User!
+  markerPostedBy: User!
 }
 
 type AuthPayload {
