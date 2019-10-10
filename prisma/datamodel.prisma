@@ -7,7 +7,7 @@ type Post {
   yDistance: Float!
   zDistance: Float!
   height: Float!
-  width:Float!
+  width: Float!
   postPostedBy: User!
   comments: [Comment!]!
   marker: Marker!

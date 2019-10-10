@@ -282,6 +282,7 @@ type Marker {
   latitude: Float!
   height: Float!
   markerPostedBy: User!
+  plane: String!
 }
 
 type MarkerConnection {
@@ -298,6 +299,7 @@ input MarkerCreateInput {
   latitude: Float!
   height: Float!
   markerPostedBy: UserCreateOneWithoutMarkersInput!
+  plane: String!
 }
 
 input MarkerCreateManyWithoutMarkerPostedByInput {
@@ -317,6 +319,7 @@ input MarkerCreateWithoutMarkerPostedByInput {
   longitude: Float!
   latitude: Float!
   height: Float!
+  plane: String!
 }
 
 type MarkerEdge {
@@ -339,6 +342,8 @@ enum MarkerOrderByInput {
   latitude_DESC
   height_ASC
   height_DESC
+  plane_ASC
+  plane_DESC
 }
 
 type MarkerPreviousValues {
@@ -349,6 +354,7 @@ type MarkerPreviousValues {
   longitude: Float!
   latitude: Float!
   height: Float!
+  plane: String!
 }
 
 input MarkerScalarWhereInput {
@@ -426,6 +432,20 @@ input MarkerScalarWhereInput {
   height_lte: Float
   height_gt: Float
   height_gte: Float
+  plane: String
+  plane_not: String
+  plane_in: [String!]
+  plane_not_in: [String!]
+  plane_lt: String
+  plane_lte: String
+  plane_gt: String
+  plane_gte: String
+  plane_contains: String
+  plane_not_contains: String
+  plane_starts_with: String
+  plane_not_starts_with: String
+  plane_ends_with: String
+  plane_not_ends_with: String
   AND: [MarkerScalarWhereInput!]
   OR: [MarkerScalarWhereInput!]
   NOT: [MarkerScalarWhereInput!]
@@ -456,6 +476,7 @@ input MarkerUpdateDataInput {
   latitude: Float
   height: Float
   markerPostedBy: UserUpdateOneRequiredWithoutMarkersInput
+  plane: String
 }
 
 input MarkerUpdateInput {
@@ -465,6 +486,7 @@ input MarkerUpdateInput {
   latitude: Float
   height: Float
   markerPostedBy: UserUpdateOneRequiredWithoutMarkersInput
+  plane: String
 }
 
 input MarkerUpdateManyDataInput {
@@ -473,6 +495,7 @@ input MarkerUpdateManyDataInput {
   longitude: Float
   latitude: Float
   height: Float
+  plane: String
 }
 
 input MarkerUpdateManyMutationInput {
@@ -481,6 +504,7 @@ input MarkerUpdateManyMutationInput {
   longitude: Float
   latitude: Float
   height: Float
+  plane: String
 }
 
 input MarkerUpdateManyWithoutMarkerPostedByInput {
@@ -513,6 +537,7 @@ input MarkerUpdateWithoutMarkerPostedByDataInput {
   longitude: Float
   latitude: Float
   height: Float
+  plane: String
 }
 
 input MarkerUpdateWithWhereUniqueWithoutMarkerPostedByInput {
@@ -607,6 +632,20 @@ input MarkerWhereInput {
   height_gt: Float
   height_gte: Float
   markerPostedBy: UserWhereInput
+  plane: String
+  plane_not: String
+  plane_in: [String!]
+  plane_not_in: [String!]
+  plane_lt: String
+  plane_lte: String
+  plane_gt: String
+  plane_gte: String
+  plane_contains: String
+  plane_not_contains: String
+  plane_starts_with: String
+  plane_not_starts_with: String
+  plane_ends_with: String
+  plane_not_ends_with: String
   AND: [MarkerWhereInput!]
   OR: [MarkerWhereInput!]
   NOT: [MarkerWhereInput!]
@@ -668,6 +707,8 @@ type Post {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
+  height: Float!
+  width: Float!
   postPostedBy: User!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   marker: Marker!
@@ -686,6 +727,8 @@ input PostCreateInput {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
+  height: Float!
+  width: Float!
   postPostedBy: UserCreateOneWithoutPostsInput!
   comments: CommentCreateManyWithoutPostInput
   marker: MarkerCreateOneInput!
@@ -708,6 +751,8 @@ input PostCreateWithoutCommentsInput {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
+  height: Float!
+  width: Float!
   postPostedBy: UserCreateOneWithoutPostsInput!
   marker: MarkerCreateOneInput!
 }
@@ -719,6 +764,8 @@ input PostCreateWithoutPostPostedByInput {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
+  height: Float!
+  width: Float!
   comments: CommentCreateManyWithoutPostInput
   marker: MarkerCreateOneInput!
 }
@@ -743,6 +790,10 @@ enum PostOrderByInput {
   yDistance_DESC
   zDistance_ASC
   zDistance_DESC
+  height_ASC
+  height_DESC
+  width_ASC
+  width_DESC
 }
 
 type PostPreviousValues {
@@ -753,6 +804,8 @@ type PostPreviousValues {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
+  height: Float!
+  width: Float!
 }
 
 input PostScalarWhereInput {
@@ -818,6 +871,22 @@ input PostScalarWhereInput {
   zDistance_lte: Float
   zDistance_gt: Float
   zDistance_gte: Float
+  height: Float
+  height_not: Float
+  height_in: [Float!]
+  height_not_in: [Float!]
+  height_lt: Float
+  height_lte: Float
+  height_gt: Float
+  height_gte: Float
+  width: Float
+  width_not: Float
+  width_in: [Float!]
+  width_not_in: [Float!]
+  width_lt: Float
+  width_lte: Float
+  width_gt: Float
+  width_gte: Float
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -847,6 +916,8 @@ input PostUpdateInput {
   xDistance: Float
   yDistance: Float
   zDistance: Float
+  height: Float
+  width: Float
   postPostedBy: UserUpdateOneRequiredWithoutPostsInput
   comments: CommentUpdateManyWithoutPostInput
   marker: MarkerUpdateOneRequiredInput
@@ -858,6 +929,8 @@ input PostUpdateManyDataInput {
   xDistance: Float
   yDistance: Float
   zDistance: Float
+  height: Float
+  width: Float
 }
 
 input PostUpdateManyMutationInput {
@@ -866,6 +939,8 @@ input PostUpdateManyMutationInput {
   xDistance: Float
   yDistance: Float
   zDistance: Float
+  height: Float
+  width: Float
 }
 
 input PostUpdateManyWithoutPostPostedByInput {
@@ -898,6 +973,8 @@ input PostUpdateWithoutCommentsDataInput {
   xDistance: Float
   yDistance: Float
   zDistance: Float
+  height: Float
+  width: Float
   postPostedBy: UserUpdateOneRequiredWithoutPostsInput
   marker: MarkerUpdateOneRequiredInput
 }
@@ -908,6 +985,8 @@ input PostUpdateWithoutPostPostedByDataInput {
   xDistance: Float
   yDistance: Float
   zDistance: Float
+  height: Float
+  width: Float
   comments: CommentUpdateManyWithoutPostInput
   marker: MarkerUpdateOneRequiredInput
 }
@@ -991,6 +1070,22 @@ input PostWhereInput {
   zDistance_lte: Float
   zDistance_gt: Float
   zDistance_gte: Float
+  height: Float
+  height_not: Float
+  height_in: [Float!]
+  height_not_in: [Float!]
+  height_lt: Float
+  height_lte: Float
+  height_gt: Float
+  height_gte: Float
+  width: Float
+  width_not: Float
+  width_in: [Float!]
+  width_not_in: [Float!]
+  width_lt: Float
+  width_lte: Float
+  width_gt: Float
+  width_gte: Float
   postPostedBy: UserWhereInput
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput

@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 
 function getUserId(context) {
-  console.log('context request-----------', context.request.headers)
   const Authorization = context.request.get('Authorization');
   if (Authorization) {
     const token = Authorization.replace('Bearer ', '');

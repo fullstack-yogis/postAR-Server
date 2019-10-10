@@ -34,7 +34,6 @@ async function login(parent, args, context, info) {
 }
 
 function post(parent, args, context, info) {
-  // console.log('context-----------', context)
   const userId = getUserId(context);
 
   // post(xDistance: Float!, yDistance: Float!, zDistance: Float!, privacy: Boolean!, description: String!height: Float! width: Float!): Post!
