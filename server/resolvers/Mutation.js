@@ -37,7 +37,7 @@ async function login(parent, args, context, info) {
 
 function post(parent, args, context, info) {
   // console.log('context-----------', context)
-  // const userId = getUserId(context);
+  const userId = getUserId(context);
 
   // post(xDistance: Float!, yDistance: Float!, zDistance: Float!, privacy: Boolean!, description: String!): Post!
   return context.prisma.createPost({
@@ -46,7 +46,8 @@ function post(parent, args, context, info) {
     xDistance: args.xDistance,
     yDistance: args.yDistance,
     zDistance: args.zDistance,
-    postPostedBy: { connect: { id: 'ck1l39efcctbp0b40lft3j8dm' } },
+    marker: { connect: { id: 'ck1l5gdahczar0b40frop08ju' } },
+    postPostedBy: { connect: { id: userId } },
 
   });
 }
@@ -95,6 +96,27 @@ async function deletePost(parent, args, context, info) {
   });
 }
 
+async function editComment(parent, args, context, info) {
+  const userId = getUserId(context);
+  // editPost(id: ID!, description: String!): Post!
+  return context.prisma.updateComment({
+    data: {
+      text: args.text,
+    },
+    where: {
+      id: args.id,
+    }
+  });
+}
+
+async function deleteComment(parent, args, context, info) {
+  const userId = getUserId(context);
+  // editPost(id: ID!, description: String!): Post!
+  return context.prisma.deleteComment({
+      id: args.id,
+  });
+}
+
 module.exports = {
   signup,
   login,
@@ -102,5 +124,7 @@ module.exports = {
   comment,
   addMarker,
   editPost,
-  deletePost
+  deletePost,
+  editComment,
+  deleteComment
 };

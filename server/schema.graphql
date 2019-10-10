@@ -11,6 +11,8 @@ type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   comment(postId: ID!, text: String!): Comment!
+  editComment(id: ID!, text: String!): Comment!
+  deleteComment(id: ID!): Comment
   addMarker(description: String!, imageUrl: String!, longitude: Float!, latitude: Float!, height: Float!): Marker!
 }
 
