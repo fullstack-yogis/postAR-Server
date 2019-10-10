@@ -6,6 +6,8 @@ type Post {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
+  height: Float!
+  width:Float!
   postPostedBy: User!
   comments: [Comment!]!
   marker: Marker!
@@ -20,6 +22,7 @@ type Marker {
   latitude: Float!
   height: Float!
   markerPostedBy: User!
+  plane: String!
 }
 
 type User {

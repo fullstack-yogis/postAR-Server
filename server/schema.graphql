@@ -5,7 +5,15 @@ type Query {
 }
 
 type Mutation {
-  post(xDistance: Float!, yDistance: Float!, zDistance: Float!, privacy: Boolean!, description: String!): Post!
+  post(
+    xDistance: Float!
+    yDistance: Float!
+    zDistance: Float!
+    privacy: Boolean!
+    description: String!
+    height: Float!
+    width: Float!
+  ): Post!
   editPost(id: ID!, description: String!): Post!
   deletePost(id: ID!): Post
   signup(email: String!, password: String!, name: String!): AuthPayload
@@ -13,7 +21,14 @@ type Mutation {
   comment(postId: ID!, text: String!): Comment!
   editComment(id: ID!, text: String!): Comment!
   deleteComment(id: ID!): Comment
-  addMarker(description: String!, imageUrl: String!, longitude: Float!, latitude: Float!, height: Float!): Marker!
+  addMarker(
+    description: String!
+    imageUrl: String!
+    longitude: Float!
+    latitude: Float!
+    height: Float!
+    plane: String!
+  ): Marker!
 }
 
 type Post {
@@ -23,6 +38,8 @@ type Post {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
+  height: Float!
+  width: Float!
   privacy: Boolean!
   marker: Marker!
   postPostedBy: User!
@@ -36,6 +53,7 @@ type Marker {
   longitude: Float!
   latitude: Float!
   height: Float!
+  plane: Float!
   markerPostedBy: User!
 }
 
