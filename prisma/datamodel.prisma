@@ -14,10 +14,12 @@ type Post {
 type Marker {
   id: ID! @id
   createdAt: DateTime! @createdAt
+  description: String!
   imageUrl: String!
   longitude: Float!
   latitude: Float!
   height: Float!
+  postedBy: User!
 }
 
 type User {
@@ -27,6 +29,7 @@ type User {
   password: String!
   posts: [Post!]!
   comments: [Comment!]!
+  markers: [Marker!]!
 }
 
 type Comment {

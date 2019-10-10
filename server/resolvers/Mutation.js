@@ -56,9 +56,46 @@ async function comment(parent, args, context, info) {
   });
 }
 
+async function addMarker(parent, args, context, info) {
+  const userId = getUserId(context);
+  // addMarker(description: String!, imageUrl: String!, longitude: Float!, latitude: Float!, height: Float!): Marker!
+  return context.prisma.createMarker({
+    description: args.description,
+    imageUrl: args.imageUrl,
+    longitude: args.longitude,
+    latitude: args.latitude,
+    height: args.height,
+    postedBy: { connect: { id: userId } },
+  });
+}
+
+async function editPost(parent, args, context, info) {
+  const userId = getUserId(context);
+  // editPost(id: ID!, description: String!): Post!
+  return context.prisma.updatePost({
+    data: {
+      description: args.description,
+    },
+    where: {
+      id: args.id,
+    }
+  });
+}
+
+async function deletePost(parent, args, context, info) {
+  const userId = getUserId(context);
+  // editPost(id: ID!, description: String!): Post!
+  return context.prisma.deletePost({
+      id: args.id,
+  });
+}
+
 module.exports = {
   signup,
   login,
   post,
   comment,
+  addMarker,
+  editPost,
+  deletePost
 };

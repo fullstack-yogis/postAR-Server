@@ -6,10 +6,12 @@ type Query {
 
 type Mutation {
   post(xDistance: Float!, yDistance: Float!, zDistance: Float!, privacy: Boolean!, description: String!): Post!
+  editPost(id: ID!, description: String!): Post!
+  deletePost(id: ID!): Post
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   comment(postId: ID!, text: String!): Comment!
-  addMarker(imageUrl: String!, longitude: Float!, latitude: Float!, height: Float!): Marker!
+  addMarker(description: String!, imageUrl: String!, longitude: Float!, latitude: Float!, height: Float!): Marker!
 }
 
 type Post {
@@ -28,9 +30,11 @@ type Post {
 type Marker {
   id: ID!
   imageUrl: String!
+  description: Text!
   longitude: Float!
   latitude: Float!
   height: Float!
+  postedBy: User!
 }
 
 type AuthPayload {
@@ -44,6 +48,7 @@ type User {
   email: String!
   posts: [Post!]!
   comments: [Comment!]!
+  markers: [Marker!]!
 }
 
 type Subscription {

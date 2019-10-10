@@ -1,5 +1,5 @@
 
-function postedBy(parent, args, context) {
+function postPostedBy(parent, args, context) {
   return context.prisma.post({ id: parent.id }).postedBy()
 }
 
@@ -12,7 +12,7 @@ function marker(parent, args, context) {
 }
 
 module.exports = {
-  postedBy,
+  postPostedBy,
   comments,
   marker
 }
