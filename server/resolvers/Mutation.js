@@ -45,7 +45,7 @@ function post(parent, args, context, info) {
     zDistance: args.zDistance,
     height: args.height,
     width: args.width,
-    marker: { connect: { id: 'ck1l5gdahczar0b40frop08ju' } },
+    marker: { connect: { id: 'ck1pfjeejsoyi0b405g8vvlkk' } },
     postPostedBy: { connect: { id: userId } },
   });
 }
