@@ -9,7 +9,7 @@ type Post {
   height: Float!
   width: Float!
   postPostedBy: User!
-  comments: [Comment!]!
+  comments: [Comment!]! @relation(name:"Comments", onDelete: CASCADE)
   marker: Marker!
 }
 
@@ -38,7 +38,7 @@ type User {
 type Comment {
   id: ID! @id
   text: String!
-  post: Post!
+  post: Post! @relation(name:"Comments", onDelete: SET_NULL )
   user: User!
   createdAt: DateTime! @createdAt
 }

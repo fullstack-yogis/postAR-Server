@@ -108,6 +108,7 @@ function editComment(parent, args, context, info) {
   });
 }
 
+//delete single comment by ID
 function deleteComment(parent, args, context, info) {
   const userId = getUserId(context);
   // editPost(id: ID!, description: String!): Post!
