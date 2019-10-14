@@ -1,3 +1,4 @@
+const { getUserId } = require('../utils');
 
 function newPostSubscribe(parent, args, context, info) {
   return context.prisma.$subscribe.post({ mutation_in: ['CREATED'] }).node()
@@ -6,7 +7,15 @@ function newPostSubscribe(parent, args, context, info) {
 const newPost = {
   subscribe: newPostSubscribe,
   resolve: payload => {
-    return payload
+    // const userId = getUserId(context);
+
+    if (payload.privacy === false) {
+      // console.log('getting the payload', payload)
+      return payload
+    } else {
+      // console.log('not getting the payload')
+      return
+    }
   },
 }
 

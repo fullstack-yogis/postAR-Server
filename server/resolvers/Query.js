@@ -1,5 +1,27 @@
+const { getUserId } = require('../utils');
+
 async function feed(parent, args, context, info) {
-  const posts = await context.prisma.posts();
+  const userId = getUserId(context);
+  const where = {
+    OR: [
+      {privacy: false},
+      {
+        AND: [
+          {postPostedBy: {
+            id: userId
+          }},
+          {privacy: true}
+        ]
+      }
+    ]
+  }
+
+
+  const posts = await context.prisma.posts({
+    where
+  });
+
+  // console.log('posts-------------', posts)
   return posts;
 }
 
