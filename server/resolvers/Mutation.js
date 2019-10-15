@@ -43,6 +43,7 @@ function post(parent, args, context, info) {
     xDistance: args.xDistance,
     yDistance: args.yDistance,
     zDistance: args.zDistance,
+    rotation: args.rotation,
     height: args.height,
     width: args.width,
     marker: { connect: { id: 'ck1pfjeejsoyi0b405g8vvlkk' } },
