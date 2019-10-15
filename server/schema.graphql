@@ -42,6 +42,7 @@ type Post {
   height: Float!
   width: Float!
   privacy: Boolean!
+  roration: Float!
   marker: Marker!
   postPostedBy: User!
   comments: [Comment!]!
