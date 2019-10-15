@@ -12,6 +12,7 @@ type Mutation {
     zDistance: Float!
     privacy: Boolean!
     description: String!
+    rotation: Float!
     height: Float!
     width: Float!
   ): Post!
@@ -42,7 +43,7 @@ type Post {
   height: Float!
   width: Float!
   privacy: Boolean!
-  roration: Float!
+  rotation: Float!
   marker: Marker!
   postPostedBy: User!
   comments: [Comment!]!

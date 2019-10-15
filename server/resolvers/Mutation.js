@@ -37,6 +37,7 @@ function post(parent, args, context, info) {
   const userId = getUserId(context);
 
   // post(xDistance: Float!, yDistance: Float!, zDistance: Float!, privacy: Boolean!, description: String!height: Float! width: Float!): Post!
+  console.log('------args-------', args)
   return context.prisma.createPost({
     description: args.description,
     privacy: args.privacy,
