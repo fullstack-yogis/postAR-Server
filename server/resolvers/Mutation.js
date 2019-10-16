@@ -34,7 +34,9 @@ async function login(parent, args, context, info) {
 }
 
 function post(parent, args, context, info) {
+  console.log('entered')
   const userId = getUserId(context);
+  console.log('entered----------srgs', args)
 
   // post(xDistance: Float!, yDistance: Float!, zDistance: Float!, privacy: Boolean!, description: String!height: Float! width: Float!): Post!
   return context.prisma.createPost({
@@ -43,7 +45,8 @@ function post(parent, args, context, info) {
     xDistance: args.xDistance,
     yDistance: args.yDistance,
     zDistance: args.zDistance,
-    rotation: args.rotation,
+    horRotation: args.horRotation,
+    verRotation: args.verRotation,
     height: args.height,
     width: args.width,
     marker: { connect: { id: 'ck1pfjeejsoyi0b405g8vvlkk' } },

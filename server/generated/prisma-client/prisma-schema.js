@@ -707,7 +707,8 @@ type Post {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
-  rotation: Float!
+  horRotation: Float!
+  verRotation: Float!
   height: Float!
   width: Float!
   postPostedBy: User!
@@ -728,7 +729,8 @@ input PostCreateInput {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
-  rotation: Float!
+  horRotation: Float!
+  verRotation: Float!
   height: Float!
   width: Float!
   postPostedBy: UserCreateOneWithoutPostsInput!
@@ -753,7 +755,8 @@ input PostCreateWithoutCommentsInput {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
-  rotation: Float!
+  horRotation: Float!
+  verRotation: Float!
   height: Float!
   width: Float!
   postPostedBy: UserCreateOneWithoutPostsInput!
@@ -767,7 +770,8 @@ input PostCreateWithoutPostPostedByInput {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
-  rotation: Float!
+  horRotation: Float!
+  verRotation: Float!
   height: Float!
   width: Float!
   comments: CommentCreateManyWithoutPostInput
@@ -794,8 +798,10 @@ enum PostOrderByInput {
   yDistance_DESC
   zDistance_ASC
   zDistance_DESC
-  rotation_ASC
-  rotation_DESC
+  horRotation_ASC
+  horRotation_DESC
+  verRotation_ASC
+  verRotation_DESC
   height_ASC
   height_DESC
   width_ASC
@@ -810,7 +816,8 @@ type PostPreviousValues {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
-  rotation: Float!
+  horRotation: Float!
+  verRotation: Float!
   height: Float!
   width: Float!
 }
@@ -878,14 +885,22 @@ input PostScalarWhereInput {
   zDistance_lte: Float
   zDistance_gt: Float
   zDistance_gte: Float
-  rotation: Float
-  rotation_not: Float
-  rotation_in: [Float!]
-  rotation_not_in: [Float!]
-  rotation_lt: Float
-  rotation_lte: Float
-  rotation_gt: Float
-  rotation_gte: Float
+  horRotation: Float
+  horRotation_not: Float
+  horRotation_in: [Float!]
+  horRotation_not_in: [Float!]
+  horRotation_lt: Float
+  horRotation_lte: Float
+  horRotation_gt: Float
+  horRotation_gte: Float
+  verRotation: Float
+  verRotation_not: Float
+  verRotation_in: [Float!]
+  verRotation_not_in: [Float!]
+  verRotation_lt: Float
+  verRotation_lte: Float
+  verRotation_gt: Float
+  verRotation_gte: Float
   height: Float
   height_not: Float
   height_in: [Float!]
@@ -931,7 +946,8 @@ input PostUpdateInput {
   xDistance: Float
   yDistance: Float
   zDistance: Float
-  rotation: Float
+  horRotation: Float
+  verRotation: Float
   height: Float
   width: Float
   postPostedBy: UserUpdateOneRequiredWithoutPostsInput
@@ -945,7 +961,8 @@ input PostUpdateManyDataInput {
   xDistance: Float
   yDistance: Float
   zDistance: Float
-  rotation: Float
+  horRotation: Float
+  verRotation: Float
   height: Float
   width: Float
 }
@@ -956,7 +973,8 @@ input PostUpdateManyMutationInput {
   xDistance: Float
   yDistance: Float
   zDistance: Float
-  rotation: Float
+  horRotation: Float
+  verRotation: Float
   height: Float
   width: Float
 }
@@ -991,7 +1009,8 @@ input PostUpdateWithoutCommentsDataInput {
   xDistance: Float
   yDistance: Float
   zDistance: Float
-  rotation: Float
+  horRotation: Float
+  verRotation: Float
   height: Float
   width: Float
   postPostedBy: UserUpdateOneRequiredWithoutPostsInput
@@ -1004,7 +1023,8 @@ input PostUpdateWithoutPostPostedByDataInput {
   xDistance: Float
   yDistance: Float
   zDistance: Float
-  rotation: Float
+  horRotation: Float
+  verRotation: Float
   height: Float
   width: Float
   comments: CommentUpdateManyWithoutPostInput
@@ -1090,14 +1110,22 @@ input PostWhereInput {
   zDistance_lte: Float
   zDistance_gt: Float
   zDistance_gte: Float
-  rotation: Float
-  rotation_not: Float
-  rotation_in: [Float!]
-  rotation_not_in: [Float!]
-  rotation_lt: Float
-  rotation_lte: Float
-  rotation_gt: Float
-  rotation_gte: Float
+  horRotation: Float
+  horRotation_not: Float
+  horRotation_in: [Float!]
+  horRotation_not_in: [Float!]
+  horRotation_lt: Float
+  horRotation_lte: Float
+  horRotation_gt: Float
+  horRotation_gte: Float
+  verRotation: Float
+  verRotation_not: Float
+  verRotation_in: [Float!]
+  verRotation_not_in: [Float!]
+  verRotation_lt: Float
+  verRotation_lte: Float
+  verRotation_gt: Float
+  verRotation_gte: Float
   height: Float
   height_not: Float
   height_in: [Float!]

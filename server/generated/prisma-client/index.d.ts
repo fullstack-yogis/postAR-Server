@@ -233,8 +233,10 @@ export type PostOrderByInput =
   | "yDistance_DESC"
   | "zDistance_ASC"
   | "zDistance_DESC"
-  | "rotation_ASC"
-  | "rotation_DESC"
+  | "horRotation_ASC"
+  | "horRotation_DESC"
+  | "verRotation_ASC"
+  | "verRotation_DESC"
   | "height_ASC"
   | "height_DESC"
   | "width_ASC"
@@ -345,14 +347,22 @@ export interface PostWhereInput {
   zDistance_lte?: Maybe<Float>;
   zDistance_gt?: Maybe<Float>;
   zDistance_gte?: Maybe<Float>;
-  rotation?: Maybe<Float>;
-  rotation_not?: Maybe<Float>;
-  rotation_in?: Maybe<Float[] | Float>;
-  rotation_not_in?: Maybe<Float[] | Float>;
-  rotation_lt?: Maybe<Float>;
-  rotation_lte?: Maybe<Float>;
-  rotation_gt?: Maybe<Float>;
-  rotation_gte?: Maybe<Float>;
+  horRotation?: Maybe<Float>;
+  horRotation_not?: Maybe<Float>;
+  horRotation_in?: Maybe<Float[] | Float>;
+  horRotation_not_in?: Maybe<Float[] | Float>;
+  horRotation_lt?: Maybe<Float>;
+  horRotation_lte?: Maybe<Float>;
+  horRotation_gt?: Maybe<Float>;
+  horRotation_gte?: Maybe<Float>;
+  verRotation?: Maybe<Float>;
+  verRotation_not?: Maybe<Float>;
+  verRotation_in?: Maybe<Float[] | Float>;
+  verRotation_not_in?: Maybe<Float[] | Float>;
+  verRotation_lt?: Maybe<Float>;
+  verRotation_lte?: Maybe<Float>;
+  verRotation_gt?: Maybe<Float>;
+  verRotation_gte?: Maybe<Float>;
   height?: Maybe<Float>;
   height_not?: Maybe<Float>;
   height_in?: Maybe<Float[] | Float>;
@@ -621,7 +631,8 @@ export interface PostCreateWithoutCommentsInput {
   xDistance: Float;
   yDistance: Float;
   zDistance: Float;
-  rotation: Float;
+  horRotation: Float;
+  verRotation: Float;
   height: Float;
   width: Float;
   postPostedBy: UserCreateOneWithoutPostsInput;
@@ -717,7 +728,8 @@ export interface PostCreateWithoutPostPostedByInput {
   xDistance: Float;
   yDistance: Float;
   zDistance: Float;
-  rotation: Float;
+  horRotation: Float;
+  verRotation: Float;
   height: Float;
   width: Float;
   comments?: Maybe<CommentCreateManyWithoutPostInput>;
@@ -770,7 +782,8 @@ export interface PostUpdateWithoutCommentsDataInput {
   xDistance?: Maybe<Float>;
   yDistance?: Maybe<Float>;
   zDistance?: Maybe<Float>;
-  rotation?: Maybe<Float>;
+  horRotation?: Maybe<Float>;
+  verRotation?: Maybe<Float>;
   height?: Maybe<Float>;
   width?: Maybe<Float>;
   postPostedBy?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
@@ -1104,7 +1117,8 @@ export interface PostUpdateWithoutPostPostedByDataInput {
   xDistance?: Maybe<Float>;
   yDistance?: Maybe<Float>;
   zDistance?: Maybe<Float>;
-  rotation?: Maybe<Float>;
+  horRotation?: Maybe<Float>;
+  verRotation?: Maybe<Float>;
   height?: Maybe<Float>;
   width?: Maybe<Float>;
   comments?: Maybe<CommentUpdateManyWithoutPostInput>;
@@ -1239,14 +1253,22 @@ export interface PostScalarWhereInput {
   zDistance_lte?: Maybe<Float>;
   zDistance_gt?: Maybe<Float>;
   zDistance_gte?: Maybe<Float>;
-  rotation?: Maybe<Float>;
-  rotation_not?: Maybe<Float>;
-  rotation_in?: Maybe<Float[] | Float>;
-  rotation_not_in?: Maybe<Float[] | Float>;
-  rotation_lt?: Maybe<Float>;
-  rotation_lte?: Maybe<Float>;
-  rotation_gt?: Maybe<Float>;
-  rotation_gte?: Maybe<Float>;
+  horRotation?: Maybe<Float>;
+  horRotation_not?: Maybe<Float>;
+  horRotation_in?: Maybe<Float[] | Float>;
+  horRotation_not_in?: Maybe<Float[] | Float>;
+  horRotation_lt?: Maybe<Float>;
+  horRotation_lte?: Maybe<Float>;
+  horRotation_gt?: Maybe<Float>;
+  horRotation_gte?: Maybe<Float>;
+  verRotation?: Maybe<Float>;
+  verRotation_not?: Maybe<Float>;
+  verRotation_in?: Maybe<Float[] | Float>;
+  verRotation_not_in?: Maybe<Float[] | Float>;
+  verRotation_lt?: Maybe<Float>;
+  verRotation_lte?: Maybe<Float>;
+  verRotation_gt?: Maybe<Float>;
+  verRotation_gte?: Maybe<Float>;
   height?: Maybe<Float>;
   height_not?: Maybe<Float>;
   height_in?: Maybe<Float[] | Float>;
@@ -1279,7 +1301,8 @@ export interface PostUpdateManyDataInput {
   xDistance?: Maybe<Float>;
   yDistance?: Maybe<Float>;
   zDistance?: Maybe<Float>;
-  rotation?: Maybe<Float>;
+  horRotation?: Maybe<Float>;
+  verRotation?: Maybe<Float>;
   height?: Maybe<Float>;
   width?: Maybe<Float>;
 }
@@ -1329,7 +1352,8 @@ export interface PostCreateInput {
   xDistance: Float;
   yDistance: Float;
   zDistance: Float;
-  rotation: Float;
+  horRotation: Float;
+  verRotation: Float;
   height: Float;
   width: Float;
   postPostedBy: UserCreateOneWithoutPostsInput;
@@ -1343,7 +1367,8 @@ export interface PostUpdateInput {
   xDistance?: Maybe<Float>;
   yDistance?: Maybe<Float>;
   zDistance?: Maybe<Float>;
-  rotation?: Maybe<Float>;
+  horRotation?: Maybe<Float>;
+  verRotation?: Maybe<Float>;
   height?: Maybe<Float>;
   width?: Maybe<Float>;
   postPostedBy?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
@@ -1357,7 +1382,8 @@ export interface PostUpdateManyMutationInput {
   xDistance?: Maybe<Float>;
   yDistance?: Maybe<Float>;
   zDistance?: Maybe<Float>;
-  rotation?: Maybe<Float>;
+  horRotation?: Maybe<Float>;
+  verRotation?: Maybe<Float>;
   height?: Maybe<Float>;
   width?: Maybe<Float>;
 }
@@ -1477,7 +1503,8 @@ export interface Post {
   xDistance: Float;
   yDistance: Float;
   zDistance: Float;
-  rotation: Float;
+  horRotation: Float;
+  verRotation: Float;
   height: Float;
   width: Float;
 }
@@ -1490,7 +1517,8 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   xDistance: () => Promise<Float>;
   yDistance: () => Promise<Float>;
   zDistance: () => Promise<Float>;
-  rotation: () => Promise<Float>;
+  horRotation: () => Promise<Float>;
+  verRotation: () => Promise<Float>;
   height: () => Promise<Float>;
   width: () => Promise<Float>;
   postPostedBy: <T = UserPromise>() => T;
@@ -1516,7 +1544,8 @@ export interface PostSubscription
   xDistance: () => Promise<AsyncIterator<Float>>;
   yDistance: () => Promise<AsyncIterator<Float>>;
   zDistance: () => Promise<AsyncIterator<Float>>;
-  rotation: () => Promise<AsyncIterator<Float>>;
+  horRotation: () => Promise<AsyncIterator<Float>>;
+  verRotation: () => Promise<AsyncIterator<Float>>;
   height: () => Promise<AsyncIterator<Float>>;
   width: () => Promise<AsyncIterator<Float>>;
   postPostedBy: <T = UserSubscription>() => T;
@@ -1542,7 +1571,8 @@ export interface PostNullablePromise
   xDistance: () => Promise<Float>;
   yDistance: () => Promise<Float>;
   zDistance: () => Promise<Float>;
-  rotation: () => Promise<Float>;
+  horRotation: () => Promise<Float>;
+  verRotation: () => Promise<Float>;
   height: () => Promise<Float>;
   width: () => Promise<Float>;
   postPostedBy: <T = UserPromise>() => T;
@@ -2119,7 +2149,8 @@ export interface PostPreviousValues {
   xDistance: Float;
   yDistance: Float;
   zDistance: Float;
-  rotation: Float;
+  horRotation: Float;
+  verRotation: Float;
   height: Float;
   width: Float;
 }
@@ -2134,7 +2165,8 @@ export interface PostPreviousValuesPromise
   xDistance: () => Promise<Float>;
   yDistance: () => Promise<Float>;
   zDistance: () => Promise<Float>;
-  rotation: () => Promise<Float>;
+  horRotation: () => Promise<Float>;
+  verRotation: () => Promise<Float>;
   height: () => Promise<Float>;
   width: () => Promise<Float>;
 }
@@ -2149,7 +2181,8 @@ export interface PostPreviousValuesSubscription
   xDistance: () => Promise<AsyncIterator<Float>>;
   yDistance: () => Promise<AsyncIterator<Float>>;
   zDistance: () => Promise<AsyncIterator<Float>>;
-  rotation: () => Promise<AsyncIterator<Float>>;
+  horRotation: () => Promise<AsyncIterator<Float>>;
+  verRotation: () => Promise<AsyncIterator<Float>>;
   height: () => Promise<AsyncIterator<Float>>;
   width: () => Promise<AsyncIterator<Float>>;
 }
