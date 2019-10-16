@@ -6,7 +6,8 @@ type Post {
   xDistance: Float!
   yDistance: Float!
   zDistance: Float!
-  rotation: Float!
+  horRotation: Float!
+  verRotation: Float!
   height: Float!
   width: Float!
   postPostedBy: User!

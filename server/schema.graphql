@@ -43,7 +43,8 @@ type Post {
   height: Float!
   width: Float!
   privacy: Boolean!
-  rotation: Float!
+  horRotation: Float!
+  verRotation: Float!
   marker: Marker!
   postPostedBy: User!
   comments: [Comment!]!
