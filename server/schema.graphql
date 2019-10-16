@@ -12,7 +12,8 @@ type Mutation {
     zDistance: Float!
     privacy: Boolean!
     description: String!
-    rotation: Float!
+    horRotation: Float!
+    verRotation: Float!
     height: Float!
     width: Float!
   ): Post!
