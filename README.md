@@ -4,7 +4,7 @@ This is the deployed version of our server. The [front-end](https://github.com/f
 
 This repository contains the back end source code, built using GraphQL Yoga server, Prisma Client, and connecting to Prisma Server.
 
-If you would like to run the server locally, please follow the directions
+If you would like to run the server locally, please follow the below directions
 
 # Prerequisites
 
@@ -101,4 +101,4 @@ status: active
 
 The IP Address you need is what follows after inet, in this case `172.16.21.160`
 
-Your server is now running at http://*your ip address\*:4000
+Your server is now running at http://_your ip address_:4000
