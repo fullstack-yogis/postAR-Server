@@ -3,6 +3,7 @@ scalar DateTime
 type Query {
   feed: [Post!]!
   post(id: ID!): Post!
+  allMarkers: [Marker!]!
 }
 
 type Mutation {
